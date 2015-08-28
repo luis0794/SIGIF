@@ -1,0 +1,35 @@
+{% extends "navbar.html" %}
+{%block title%}Agregar Usuario{%endblock%}
+{% block content%}
+<div class="panel panel-default">
+  <div class="panel-heading"><h4>Editar Usuario</h4></div>
+  <div class="panel-body">
+    <form class="form-horizontal form-group " method="post">
+      {% load bootstrap3 %}
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <br>
+      <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center" class="container">
+        <tr>
+          <td width="100">&nbsp;</td>
+          <td width="20">&nbsp;</td>
+          <td width="80">&nbsp;</td>
+          <td width="100">&nbsp;</td>
+          <td width="50">&nbsp;</td>
+          <td width="50">&nbsp;</td>
+          <td width="100">&nbsp;</td>
+          <td width="100">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="1">
+            <input class="btn-danger btn"  onclick=" window.location.href='{%url 'index'%}'"value="Cancelar">
+          </td>   
+          <td colspan="1">
+            <input type="submit" class="btn-primary btn"  value="Guardar">
+          </td>
+        </tr>
+      </table>
+    </form> 
+  </div>
+</div>
+{% endblock %}
