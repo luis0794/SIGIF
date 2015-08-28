@@ -41,10 +41,6 @@ INSTALLED_APPS = (
     'SIGIF.apps.security',
     'SIGIF.apps.Usuarios',
     'SIGIF.apps.Clientes',
-    'SIGIF.apps.Proveedores',
-    'SIGIF.apps.Productos',
-    'SIGIF.apps.Pedidos',
-    'SIGIF.apps.Factura',
     'bootstrap3'
 )
 
