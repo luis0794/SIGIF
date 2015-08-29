@@ -1,17 +1,17 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from .apps.Usuarios.views import *
-from .apps.Clientes.views import *
-from .apps.Proveedores.views import *
-from .apps.Productos.views import *
-from .apps.Pedidos.views import *
-from .apps.Factura.views import *
+from apps.Usuarios.views import *
+from apps.Clientes.views import *
+from apps.Proveedores.views import *
+from apps.Productos.views import *
+from apps.Pedidos.views import *
+from apps.Factura.views import *
 
 urlpatterns = [
     #url(r'^admin/', include(admin.site.urls)),
     url(r'^$','django.contrib.auth.views.login',{'template_name': 'login.html'},name='login'),
     url(r'^cerrar/$','django.contrib.auth.views.logout_then_login',name='logout'),
-    url(r'^index/$','SIGIF.apps.security.views.index_view',name='index'),
+    url(r'^index/$','apps.security.views.index_view',name='index'),
 
 #Usuarios
     url(r'^usuario/nuevoUsuario/$',newUser_view.as_view(),name='new_usuario'),
@@ -48,6 +48,8 @@ urlpatterns = [
     url(r'^pedido/Administrar/',listOrder_view,name='list_pedido'),
     url(r'^pedido/nuevoPedido/productos/$',listOrderProduct_view.as_view()),
     url(r'^pedido/generar_pdf/$', generar_pdf_Pedido, name='pdf_pedido'),
+    url(r'^pedido/FiltrarProductos/$',obtenerProductos, name="filter_productos"),
+
 
 
 #Factura

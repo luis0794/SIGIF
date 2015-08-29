@@ -1,0 +1,249 @@
+{% extends "navbar.html" %}
+{%load staticfiles%}
+{%block title%}Agregar Pedido{%endblock title%}
+{% block content%}
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4>Agregar Pedido</h4></div>
+        <div class="panel-body">
+            <form class="form-horizontal form-group " method="post" id="formulario">
+                <br>
+                {% csrf_token %}
+                <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center">
+                    <tr>
+                        <td width="100">&nbsp;</td>
+                        <td width="20">&nbsp;</td>
+                        <td width="80">&nbsp;</td>
+                        <td width="100">&nbsp;</td>
+                        <td width="50">&nbsp;</td>
+                        <td width="50">&nbsp;</td>
+                        <td width="100">&nbsp;</td>
+                        <td width="100">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1">
+                            <label> <font color="black" face="Arial" size=3>Num. Pedido: </font></label>
+                        </td>
+                        <td colspan="2">
+                            <input disabled type="text" name="txtNumPedido" style=" width: 150px ; height: 30px ;color: black" id="txtNumPedido" class="form-control" onclick="#">
+
+                        </td>
+                    </tr>
+
+                    <tr><td><br></td></tr>
+
+                    <tr>
+                        <td colspan="1">
+                            <label> <font color="black" face="Arial" size=3>Nom. Usuario: </font></label>
+                        </td>
+                        <td colspan="2">
+                            <input disabled type="text" name="txtNomUsuario" style=" width: 150px ; height: 30px ;color: black" id="txtNomUsuario" class="form-control" onclick="#" value={{user.usu_nom|capfirst}}>
+                        </td>
+                        <td colspan="1">
+                            <label> <font color="black" face="Arial" size=3>Nom. Proveedor: </font></label>
+                        </td>
+                        <td colspan="2">
+                            <select  onchange="filtrarProductos()" class="form-control" style="width: 150px ; height: 30px; vertical-align: middle" name="cmbNomProveedor" id="cmbNomProveedor" SIZE=1>
+                                <option>-----</option>
+                                {%for proveedor in listaProveedores%}
+                                    <option value="{{ proveedor.id }}">{{proveedor.prov_nom}}</option>
+                                {%endfor%}
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="8">
+                            <hr>
+                        </td>
+
+                    <tr>
+                        <td colspan="1">
+                            <label> <font color="black" face="Arial" size=3>Productos </font></label>
+                        </td>
+                    </tr>
+
+                    <tr><td><br></td></tr>
+
+                    <tr>
+
+                        <td colspan="8">
+                            <table border="0" cellspacing="0" cellpadding="0" align="center" class="table table-striped" id="tabla1">
+                                <tr>
+                                    <th width="10%">Cantidad</th>
+                                    <th width="40%">Nombre</th>
+                                    <th width="50%">Nota</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" name="txtCantidad" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad" class="form-control" onclick="">
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input disabled style=" width: 290px;" id="1" name="1" type="text" class="form-control" placeholder="Producto...">
+                                          <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" id="1" onclick="verProductos(this)">Buscar</button>
+                                        </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="txtNota" style=" width: 480px ; height: 34px ;color: black" id="txtNota" class="form-control" onclick="">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr><td><br></td></tr>
+
+                    <tr>
+                        <td colspan="1">
+                            <button onclick="agregar()" name="btnuser" id="btnuser" type="button" style="font-size: 15px; width: 40px; height: 30px">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true" > </span>
+                                <button onclick="quitar()" name="btnuser" id="btnuser" type="button" style="font-size: 15px; width: 40px; height: 30px" onclick="">
+                                    <span class="glyphicon glyphicon-minus" aria-hidden="true" > </span>
+                        </td>
+                    </tr>
+
+                    <tr><td><br></td></tr>
+                </table>
+
+                <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center">
+                    <tr>
+                        <td width="100">&nbsp;</td>
+                        <td width="20">&nbsp;</td>
+                        <td width="80">&nbsp;</td>
+                        <td width="100">&nbsp;</td>
+                        <td width="50">&nbsp;</td>
+                        <td width="50">&nbsp;</td>
+                        <td width="100">&nbsp;</td>
+                        <td width="100">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <input class="btn-danger btn"  onclick=" window.location.href='{%url 'index'%}'"value="Cancelar">
+                        </td>
+                        <td colspan="1">
+                            <input type="submit" class="btn-primary btn"  value="Guardar">
+                        </td>
+                        <td colspan="1">
+                            <input type="submit" class="btn-primary btn"  value="Imprimir">
+                        </td>
+                    </tr>
+                </table>
+            </form> 
+        </div>
+    </div>
+    <div id="filaProducto"> </div>
+
+{% endblock content %}
+{% block js_custom %}
+
+    <script type="text/javascript">
+        var dir=1;
+        var vali =1;
+        var contador=1;
+        function agregar() {
+            dir++;
+            vali++;
+            contador++;
+            $('#tabla1 tr:last').after('<tr><td><input type="text" name="txtCantidad'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad'+contador+'" class="form-control" onclick="#"></td><td><div class="input-group"><input disabled style=" width: 290px;" id="'+contador+'" name="'+contador+'" type="text" class="form-control" placeholder="Producto..."><span class="input-group-btn"><button class="btn btn-default" type="button" id="'+contador+'" onclick="verProductos(this)">Buscar</button></span></div></td><td><input type="text" name="txtNota'+contador+'" style=" width: 480px ; height: 34px ;color: black" id="txtNota'+contador+'" class="form-control" onclick=""></td></tr>')
+        }
+        function quitar() {
+
+            if (dir > 1) {
+                $('#tabla1 tr:last').remove()
+                dir--;
+            }
+        }
+        function verProductos(id){
+            bootbox.dialog({
+                        message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
+                        '<br>'+
+                        '<br>'+
+                        '<div class="panel panel-primary">'+
+                        '<div class="panel-heading"><h4>Listado de Productos</h4></div>'+
+                        '<div class="panel-body">'+
+                        '<table valign="middle" class="table">'+
+                        '<thead>'+
+                        '<tr>'+
+                        '<th>Nombre</th>'+
+                        '<th>Marca</th>'+
+                        '<th>Precio</th>'+
+                        '<th>Stock Actual</th>'+
+                        '<th></th>'+
+                        '</tr>'+
+                        '</thead>'+
+                        '<tbody id="filaProducto">'+
+                        '</tbody>'+
+                        '</table>'+
+                        '</div>'+
+                        '</div>'+
+                        '</form>',
+                        buttons: {
+                            success: {
+                                label: "Aceptar",
+                                className: "btn-success",
+                                callback: function () {
+                                    var name = $('input:radio[name=select]:checked').val()
+                                    var bandera = "si"
+
+                                    for(var i=1 ; i<=vali; i++){
+                                        if($("#"+i).val() == name){
+                                            alert("Producto ya seleccionado")
+                                            bandera = "no"
+                                        }
+                                    }
+                                    if (bandera == "si"){
+                                        document.getElementById(id.id).value = name
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+            );
+        }
+
+        function filtrarProductos(){
+            var prove = document.getElementById('cmbNomProveedor');
+            var id_proveedor = prove.options[prove.selectedIndex].value;
+            $.ajax({
+                url: '/pedido/FiltrarProductos/',
+                dataType:'json',
+                data: {'id_proveedor':id_proveedor},
+                type: 'GET'
+
+            })
+                    .done(function(data){
+                        var fila = ''
+                        for (var i=0; i<data.length; i++){
+                            fila += '<table>'+
+                                    '<tr>'+
+                                    '<td>'+(data[i].nombre)+'</td>'+
+                                    '<td>'+(data[i].marca)+'</td>'+
+                                    '<td>'+(data[i].precio)+'</td>'+
+                                    '<td>'+(data[i].stock_actual)+'</td>'+
+                                    '<td><input type="radio" name="select" value="'+(data[i].nombre)+'"></td>'+
+                                    '</tr>'+
+                                    '</table>'
+                        }
+                        $('#filaProducto').html(fila);
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(errorThrown)
+                    })
+        }
+
+
+    </script>
+{% endblock js_custom %}
+
+
+
+
+
+
+
+
+

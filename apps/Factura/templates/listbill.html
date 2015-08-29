@@ -1,0 +1,51 @@
+{% extends "navbar.html" %}
+{%block title%}Factura{%endblock%}
+{% block content%}
+<form class="form-horizontal form-group " method="post">{% csrf_token %}
+  <div class="btn-group" role="group" aria-label="...">
+    <button type="button" class="btn btn-default" onclick=" window.location.href='{% url 'new_factura' %}' "><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+    <button type="button" class="btn btn-default" onclick=" window.location.href='{% url 'pdf_factura' %}' "><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+    <div class="col-lg-3">
+      <div class="input-group">
+        <span class="input-group-btn ">
+          <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+        </span>
+        <input id="buscar" name="buscar" type="text" class="form-control" placeholder="Numero de Factura...">
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>  
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Listado de Facturas</h4></div>
+    <div class="panel-body">
+      <table valign="middle" class="table">
+        <thead>
+          <tr>
+            <th>Num. Factura</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Total</th>
+            <th>(Editar / Eliminar)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for factura in results %}
+          <tr>
+            <td>{{ factura.fac_num }}</td>
+            <td>{{ factura.cli_id }}</td>
+            <td>{{ factura.fac_fec }}</td>
+            <td>{{ factura.fac_tot }}</td>
+            <td>
+              <button type="button" class="btn btn-default" onclick=" window.location.href='#'"><span class="glyphicon glyphicon-pencil"></span></button>
+              <button type="button" class="btn btn-default" onclick=" window.location.href='#'"><span class="glyphicon glyphicon-remove"></span></button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>
+
+{% endblock %}
