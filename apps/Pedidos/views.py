@@ -77,7 +77,7 @@ def listOrder_view(request):
 
 
 def newOrder_view(request):
-    cntx={'listaProveedores': Proveedor.objects.filter(est_proveedor=True),'listaPedidos': Pedido.objects.all(),
+    cntx={'listaProveedores': Proveedor.objects.filter(est_proveedor=True),'listaPedidos': Pedido.objects.count(),
           'listaProductos':Producto.objects.all().order_by('pro_nom'),}
     return render_to_response('addorder.html',cntx,context_instance=RequestContext(request))
 

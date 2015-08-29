@@ -25,8 +25,7 @@
                             <label> <font color="black" face="Arial" size=3>Num. Pedido: </font></label>
                         </td>
                         <td colspan="2">
-                            <input disabled type="text" name="txtNumPedido" style=" width: 150px ; height: 30px ;color: black" id="txtNumPedido" class="form-control" onclick="#">
-
+                            <input disabled style=" width: 150px;" type="text" class="form-control" id="numPed" value="Num" placeholder="Num...">
                         </td>
                     </tr>
 
@@ -37,10 +36,10 @@
                             <label> <font color="black" face="Arial" size=3>Nom. Usuario: </font></label>
                         </td>
                         <td colspan="2">
-                            <input disabled type="text" name="txtNomUsuario" style=" width: 150px ; height: 30px ;color: black" id="txtNomUsuario" class="form-control" onclick="#" value={{user.usu_nom|capfirst}}>
+                            <input disabled type="text" name="txtNomUsuario" style=" width: 150px ; height: 30px ;color: black" id="txtNomUsuario" class="form-control" onclick="" value={{user.usu_nom|capfirst}}>
                         </td>
                         <td colspan="1">
-                            <label> <font color="black" face="Arial" size=3>Nom. Proveedor: </font></label>
+                            <label> <font color="black" face="Arial" size=3 id="nomProv">Nom. Proveedor: </font></label>
                         </td>
                         <td colspan="2">
                             <select  onchange="filtrarProductos()" class="form-control" style="width: 150px ; height: 30px; vertical-align: middle" name="cmbNomProveedor" id="cmbNomProveedor" SIZE=1>
@@ -234,8 +233,11 @@
                         alert(errorThrown)
                     })
         }
-
-
+    </script>
+    <script>
+        var num = parseInt({{ listaPedidos }})+1;
+        var et= document.getElementById("NumPed");
+        et.value=num;
     </script>
 {% endblock js_custom %}
 
