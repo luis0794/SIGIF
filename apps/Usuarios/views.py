@@ -17,7 +17,7 @@ from reportlab.platypus import Table
 def listUser_view(request):
     if request.method == 'POST':
         results=Usuario.object.filter(usu_ced__contains=request.POST["buscar"]).values()
-        return render_to_response('listuser.html',{'results':results},context_instance=RequestContext(request))   
+        return render_to_response('listuser.html',{'results':results},context_instance=RequestContext(request))
     results=Usuario.object.all().order_by('usu_nom')
     return render_to_response('listuser.html',{'results':results},context_instance=RequestContext(request))
 
@@ -46,7 +46,7 @@ class editUser_view(UpdateView):
 
 def generar_pdf_Usuario(request):
     response = HttpResponse(content_type='application/pdf')
-    pdf_name = "usuarios.pdf" 
+    pdf_name = "usuarios.pdf"
     buff = BytesIO()
     doc = SimpleDocTemplate(buff,
                             pagesize=letter,
@@ -70,7 +70,7 @@ def generar_pdf_Usuario(request):
             ('BACKGROUND', (0, 0), (-1, 0), colors.dodgerblue)
         ]
     ))
-    
+
     usuarios.append(t)
     doc.build(usuarios)
     response.write(buff.getvalue())
