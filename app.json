@@ -1,0 +1,7 @@
+{
+  "name":"SIGIF",
+  "description":"Sistema de Gestion de Inventario y Facturacion",
+  "scripts":{},
+  "env":{},
+  "addons":[]
+}
