@@ -176,16 +176,15 @@
                         '</thead>'+
                         '<tbody id="filaProducto">'+
 
-                                '{% for producto in listaProductos %}'+
-                                    '<tr>'+
-                                        '<td>{{producto.pro_nom}}</td>'+
-                                        '<td>{{producto.pro_mar}}</td>'+
-                                        '<td>{{producto.pro_pre}}</td>'+
-                                        '<td>{{producto.pro_sto_act}}</td>'+
-                                        '<td><input type="radio" name="select" value="{{listaProductos.pro_nom}}"></td>'+
-                                    '</tr>'+
-                                 '{% endfor %}'+
-
+                        '{% for producto in listaProductos %}'+
+                            '<tr>'+
+                            '<td>{{producto.pro_nom}}</td>'+
+                            '<td>{{producto.pro_mar}}</td>'+
+                            '<td>{{producto.pro_pre}}</td>'+
+                            '<td>{{producto.pro_sto_act}}</td>'+
+                            '<td><input type="radio" name="select" value="{{producto.pro_nom}}"></td>'+
+                            '</tr>'+
+                            '{% endfor %}'+
                         '</tbody>'+
                         '</table>'+
                         '</div>'+
@@ -215,8 +214,8 @@
                     }
             );
         }
-/**
-        function filtrarProductos(){
+        /**
+         function filtrarProductos(){
             var prove = document.getElementById('cmbNomProveedor');
             var id_proveedor = prove.options[prove.selectedIndex].value;
             $.ajax({
