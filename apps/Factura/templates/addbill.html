@@ -306,12 +306,12 @@
     function total(){
         var tabla = document.getElementById("tabla1");
         dic=[]
-        for(var c=0 ; c < tabla.rows.length; c++){
-            PreTot += document.getElementById("tabla1").rows[c].cells[3].innerHTML;
+        for(var c=1 ; c < tabla.rows.length; c++){
+            PreTot = document.getElementById("tabla1").rows[c].cells[3].innerHTML;
             dic.push({'PreTot': PreTot});
         }
+        console.log(tabla.rows.length)
         for (var x = 0; x < dic.length; x++) {
-            alert(dic[x].PreTot)
         }
 
 
@@ -344,6 +344,7 @@
             '<table valign="middle" class="table">'+
             '<thead>'+
             '<tr>'+
+            '<th>Cantidad</th>'+
             '<th>Nombre</th>'+
             '<th>Marca</th>'+
             '<th>Stock Actual</th>'+
@@ -354,6 +355,7 @@
             '<tbody>'+
             '{% for producto in listaProductos %}'+
             '<tr>'+
+            '<td><input type="number" name="txtCantidadD" style=" width: 80px ; height: 34px ;color: black" id="txtCantidadD" class="form-control" value="0"></td>'+
             '<td>{{ producto.pro_nom }}</td>'+
             '<td>{{ producto.pro_mar }}</td>'+
             '<td>{{ producto.pro_sto_act }}</td>'+
@@ -375,19 +377,25 @@
                         var array = name.split("-")
                         var numid = ""+pro.id
                         var num =  numid.replace(/[^.0-9]/g,'');
-                        
+                        var can = document.getElementById("txtCantidadD").value
+                        var puni = parseFloat(array[1].replace(",","."));
+                        var tot = can * puni
+                        alert(tot)
 
                         for(var i=1 ; i<=vali; i++){
                             if($("#txtNomProducto"+i).val() == array[0]){
                                 alert("Producto ya seleccionado")
                                 bandera = "no"
+
                             }
                         }
                         if (bandera == "si"){
+                            
                             document.getElementById("txtNomProducto").value = array[0]
-                            document.getElementById("txtPUni").value = array[1]  
+                            document.getElementById("txtPUni").value = array[1]
+                            document.getElementById("txtCantidad").value = can  
+                            document.getElementById("txtPtot").value = tot
                         }
-
                     }
                 }
             }
@@ -407,6 +415,7 @@
                 '<table valign="middle" class="table">'+
                 '<thead>'+
                 '<tr>'+
+                '<th>Cantidad</th>'+
                 '<th>Nombre</th>'+
                 '<th>Marca</th>'+
                 '<th>Stock Actual</th>'+
@@ -417,6 +426,7 @@
                 '<tbody>'+
                 '{% for producto in listaProductos %}'+
                 '<tr>'+
+                '<td><input type="number" name="txtCantidadD" style=" width: 80px ; height: 34px ;color: black" id="txtCantidadD" class="form-control" value="0"></td>'+
                 '<td>{{ producto.pro_nom }}</td>'+
                 '<td>{{ producto.pro_mar }}</td>'+
                 '<td>{{ producto.pro_sto_act }}</td>'+
@@ -434,24 +444,34 @@
                         label: "Aceptar",
                         className: "btn-success",
                         callback: function () {
+
                             var name = $('input:radio[name=select]:checked').val()
-                            var array = name.split("-")
-                            var numid = ""+pro.id
-                            var num =  numid.replace(/[^.0-9]/g,'');
-                            
+                            if(name==null){
+                                alert("Primero seleccione un producto")
+                            }else{
+                                var array = name.split("-")
+                                var numid = ""+pro.id
+                                var num =  numid.replace(/[^.0-9]/g,'');
+                                var can = document.getElementById("txtCantidadD").value
 
-                            for(var i=1 ; i<=vali; i++){
-                                if($("#txtNomProducto"+i).val() == array[0]){
-                                    alert("Producto ya seleccionado")
-                                    bandera1 = "no"
+                                for(var i=1 ; i<=vali; i++){
+                                    if($("#txtNomProducto"+i).val() == array[0]){
+                                        alert("Producto ya seleccionado")
+                                        bandera = "no"
 
+                                    }
+                                }
+                                if (bandera == "si"){
+                                    
+                                    var puni = parseFloat(array[1].replace(",","."));
+                                    var tot = parseInt(can) * puni
+                                    document.getElementById("txtNomProducto"+num).value = array[0]
+                                    document.getElementById("txtPUni"+num).value = array[1]
+                                    document.getElementById("txtCantidad"+num).value = can  
+                                    document.getElementById("txtPTot"+num).value = tot
                                 }
                             }
-                            if (bandera == "si"){
-                                document.getElementById("txtNomProducto"+num).value = array[0]
-                                document.getElementById("txtPUni"+num).value = array[1]  
-                            }
-
+                            
                         }
                     }
                 }
