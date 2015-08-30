@@ -113,6 +113,7 @@
                         <table border="0" cellspacing="0" cellpadding="0" align="center" class="table" id="tabla">
                             <tr>
                                 <td colspan="2">
+
                                     <label> <font color="black" face="Arial" size=3>Emitida por: </font></label>
                                 </td>
                                 <td colspan="2">
@@ -150,7 +151,7 @@
                                     <label> <font color="black" face="Arial" size=3>Total </font></label>
                                 </td>
                                 <td colspan="2">
-                                    <input value="10" disabled type="text" name="txtTotal" style=" width: 80px ; height: 30px ;color: black" id="txtTotal" class="form-control">
+                                    <input value="0" disabled type="text" name="txtTotal" style=" width: 80px ; height: 30px ;color: black" id="txtTotal" class="form-control">
                                 </td>
                             </tr>
                         </table>
@@ -199,6 +200,19 @@
     var contador1=10;
     var bandera = "si"
     var bander1 = "si"
+    var totales=[]
+
+    function total(){
+        subtotal=totales["txtPTot"].
+        for(var i=0;i<totales.length;i++){
+            subtotal+=totales["txtPTot"+i]
+        }
+        var iva = subtotal*0.12
+        var total = subtotal+iva
+        document.getElementById("txtSubTotal").value =subtotal
+        document.getElementById("txtIVA").value = iva
+        document.getElementById("txtTotal").value = total
+    }
 
     function guardar(){
         var numFac = document.getElementById('txtNumFactura').value;
@@ -270,6 +284,7 @@
             var uniF = parseFloat(uniS.replace(",","."))
             var tot = cant*uniF
             document.getElementById("txtPtot").value=tot
+            total()
         }
         
     }
@@ -303,19 +318,7 @@
         
     }
 
-    function total(){
-        var tabla = document.getElementById("tabla1");
-        dic=[]
-        for(var c=1 ; c < tabla.rows.length; c++){
-            PreTot = document.getElementById("tabla1").rows[c].cells[3].innerHTML;
-            dic.push({'PreTot': PreTot});
-        }
-        console.log(tabla.rows.length)
-        for (var x = 0; x < dic.length; x++) {
-        }
-
-
-    }
+    
 
     function agregar() {
         dir++;
@@ -341,10 +344,13 @@
             '<div class="panel panel-primary">'+
             '<div class="panel-heading"><h4>Listado de Productos</h4></div>'+
             '<div class="panel-body">'+
+            '<div class="input-group">'+
+            '<span class="input-group-addon" id="basic-addon1">Cantidad</span>'+
+            '<input id="txtCantidadD" type="number" class="form-control" value="0" aria-describedby="basic-addon1">'+
+            '</div>'+
             '<table valign="middle" class="table">'+
             '<thead>'+
             '<tr>'+
-            '<th>Cantidad</th>'+
             '<th>Nombre</th>'+
             '<th>Marca</th>'+
             '<th>Stock Actual</th>'+
@@ -355,7 +361,6 @@
             '<tbody>'+
             '{% for producto in listaProductos %}'+
             '<tr>'+
-            '<td><input type="number" name="txtCantidadD" style=" width: 80px ; height: 34px ;color: black" id="txtCantidadD" class="form-control" value="0"></td>'+
             '<td>{{ producto.pro_nom }}</td>'+
             '<td>{{ producto.pro_mar }}</td>'+
             '<td>{{ producto.pro_sto_act }}</td>'+
@@ -375,12 +380,9 @@
                     callback: function () {
                         var name = $('input:radio[name=select]:checked').val()
                         var array = name.split("-")
-                        var numid = ""+pro.id
-                        var num =  numid.replace(/[^.0-9]/g,'');
                         var can = document.getElementById("txtCantidadD").value
                         var puni = parseFloat(array[1].replace(",","."));
-                        var tot = can * puni
-                        alert(tot)
+                        var tot = parseInt(can) * puni
 
                         for(var i=1 ; i<=vali; i++){
                             if($("#txtNomProducto"+i).val() == array[0]){
@@ -390,18 +392,21 @@
                             }
                         }
                         if (bandera == "si"){
-                            
                             document.getElementById("txtNomProducto").value = array[0]
                             document.getElementById("txtPUni").value = array[1]
                             document.getElementById("txtCantidad").value = can  
                             document.getElementById("txtPtot").value = tot
+                            totales["txtPTot"]=tot
+                            total()
                         }
+                        
                     }
                 }
             }
-        }
-        );
 
+
+        });
+        
     }
 
     function verProductos1(pro){
@@ -412,10 +417,13 @@
                 '<div class="panel panel-primary">'+
                 '<div class="panel-heading"><h4>Listado de Productos</h4></div>'+
                 '<div class="panel-body">'+
+                '<div class="input-group">'+
+                '<span class="input-group-addon" id="basic-addon1">Cantidad</span>'+
+                '<input id="txtCantidadD" type="number" class="form-control" value="0" aria-describedby="basic-addon1">'+
+                '</div>'+
                 '<table valign="middle" class="table">'+
                 '<thead>'+
                 '<tr>'+
-                '<th>Cantidad</th>'+
                 '<th>Nombre</th>'+
                 '<th>Marca</th>'+
                 '<th>Stock Actual</th>'+
@@ -426,7 +434,6 @@
                 '<tbody>'+
                 '{% for producto in listaProductos %}'+
                 '<tr>'+
-                '<td><input type="number" name="txtCantidadD" style=" width: 80px ; height: 34px ;color: black" id="txtCantidadD" class="form-control" value="0"></td>'+
                 '<td>{{ producto.pro_nom }}</td>'+
                 '<td>{{ producto.pro_mar }}</td>'+
                 '<td>{{ producto.pro_sto_act }}</td>'+
@@ -444,34 +451,29 @@
                         label: "Aceptar",
                         className: "btn-success",
                         callback: function () {
-
                             var name = $('input:radio[name=select]:checked').val()
-                            if(name==null){
-                                alert("Primero seleccione un producto")
-                            }else{
-                                var array = name.split("-")
-                                var numid = ""+pro.id
-                                var num =  numid.replace(/[^.0-9]/g,'');
-                                var can = document.getElementById("txtCantidadD").value
+                            var array = name.split("-")
+                            var can = document.getElementById("txtCantidadD").value
+                            var puni = parseFloat(array[1].replace(",","."));
+                            var tot = parseInt(can) * puni
+                            var numid = ""+pro.id
+                            var num =  numid.replace(/[^.0-9]/g,'');
 
-                                for(var i=1 ; i<=vali; i++){
-                                    if($("#txtNomProducto"+i).val() == array[0]){
-                                        alert("Producto ya seleccionado")
-                                        bandera = "no"
+                            for(var i=1 ; i<=vali; i++){
+                                if($("#txtNomProducto"+i).val() == array[0]){
+                                    alert("Producto ya seleccionado")
+                                    bandera = "no"
 
-                                    }
-                                }
-                                if (bandera == "si"){
-                                    
-                                    var puni = parseFloat(array[1].replace(",","."));
-                                    var tot = parseInt(can) * puni
-                                    document.getElementById("txtNomProducto"+num).value = array[0]
-                                    document.getElementById("txtPUni"+num).value = array[1]
-                                    document.getElementById("txtCantidad"+num).value = can  
-                                    document.getElementById("txtPTot"+num).value = tot
                                 }
                             }
-                            
+                            if (bandera == "si"){
+                                document.getElementById("txtNomProducto"+num).value = array[0]
+                                document.getElementById("txtPUni"+num).value = array[1]
+                                document.getElementById("txtCantidad"+num).value = can  
+                                document.getElementById("txtPTot"+num).value = tot
+                                totales["txtPTot"+num]=tot
+                                total()
+                            }
                         }
                     }
                 }
