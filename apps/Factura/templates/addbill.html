@@ -203,10 +203,13 @@
     var totales=[]
 
     function total(){
-        subtotal=totales["txtPTot"].
+        subtotal=0
+
         for(var i=0;i<totales.length;i++){
-            subtotal+=totales["txtPTot"+i]
+            subtotal+=totales[i].txtPTot
+
         }
+        alert(totales[0].txtPTot)
         var iva = subtotal*0.12
         var total = subtotal+iva
         document.getElementById("txtSubTotal").value =subtotal
@@ -396,7 +399,7 @@
                             document.getElementById("txtPUni").value = array[1]
                             document.getElementById("txtCantidad").value = can  
                             document.getElementById("txtPtot").value = tot
-                            totales["txtPTot"]=tot
+                            totales.push({'txtPTot':tot})
                             total()
                         }
                         
@@ -471,7 +474,8 @@
                                 document.getElementById("txtPUni"+num).value = array[1]
                                 document.getElementById("txtCantidad"+num).value = can  
                                 document.getElementById("txtPTot"+num).value = tot
-                                totales["txtPTot"+num]=tot
+                                var txtPTot = "txtPTot"+num
+                                totales.push({'txtPTot':tot})
                                 total()
                             }
                         }

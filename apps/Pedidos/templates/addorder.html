@@ -142,6 +142,7 @@
         var dir=1;
         var vali =1;
         var contador=1;
+        var bandera = "si"
         function agregar() {
             dir++;
             vali++;
@@ -174,6 +175,17 @@
                         '</tr>'+
                         '</thead>'+
                         '<tbody id="filaProducto">'+
+
+                                '{% for producto in listaProductos %}'+
+                                    '<tr>'+
+                                        '<td>{{producto.pro_nom}}</td>'+
+                                        '<td>{{producto.pro_mar}}</td>'+
+                                        '<td>{{producto.pro_pre}}</td>'+
+                                        '<td>{{producto.pro_sto_act}}</td>'+
+                                        '<td><input type="radio" name="select" value="{{listaProductos.pro_nom}}"></td>'+
+                                    '</tr>'+
+                                 '{% endfor %}'+
+
                         '</tbody>'+
                         '</table>'+
                         '</div>'+
@@ -185,7 +197,7 @@
                                 className: "btn-success",
                                 callback: function () {
                                     var name = $('input:radio[name=select]:checked').val()
-                                    var bandera = "si"
+
 
                                     for(var i=1 ; i<=vali; i++){
                                         if($("#"+i).val() == name){
@@ -203,7 +215,7 @@
                     }
             );
         }
-
+/**
         function filtrarProductos(){
             var prove = document.getElementById('cmbNomProveedor');
             var id_proveedor = prove.options[prove.selectedIndex].value;
@@ -232,13 +244,10 @@
                     .fail(function (jqXHR, textStatus, errorThrown) {
                         alert(errorThrown)
                     })
-        }
+        }**/
+
     </script>
-    <script>
-        var num = parseInt({{ listaPedidos }})+1;
-        var et= document.getElementById("NumPed");
-        et.value=num;
-    </script>
+
 {% endblock js_custom %}
 
 
