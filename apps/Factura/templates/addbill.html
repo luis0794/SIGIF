@@ -85,7 +85,7 @@
                             </div>
                         </td>
                         <td>
-                            <input disabled type="text" name="txtPUni" style=" width: 80px ; height: 34px ;color: black" id="txtPUni" class="form-control" onclick="">
+                            <input disabled value="0" type="text" name="txtPUni" style=" width: 80px ; height: 34px ;color: black" id="txtPUni" class="form-control" onclick="">
                         </td>
                         <td>
                             <input value="0" disabled type="text" name="txtPTot" style=" width: 80px ; height: 34px ;color: black" id="txtPtot" class="form-control">
@@ -198,6 +198,7 @@
     var contador=1;
     var contador1=10;
     var bandera = "si"
+    var bander1 = "si"
 
     function guardar(){
         var numFac = document.getElementById('txtNumFactura').value;
@@ -296,7 +297,8 @@
             var uniS = $("#txtPUni"+num).val()
             var uniF = parseFloat(uniS.replace(",","."))
             var tot = cantI*uniF
-            document.getElementById("txtPtot"+num).value=tot
+            alert(tot)
+            document.getElementById("txtPTot"+num).value=tot
         }
         
     }
@@ -305,7 +307,7 @@
         dir++;
         vali++;
         contador++;
-        $('#tabla1 tr:last').after('onchange="proTotal1(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad'+contador+'" class="form-control" value="0"></td><td><div class="input-group"><input disabled style=" width: 350px;" id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" type="text" class="form-control" placeholder="Producto..."><span class="input-group-btn"><button class="btn btn-default" type="button" id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" onclick="verProductos(this)">Buscar</button></span></div></td><td><input disabled type="text" name="txtPUni'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtPUni'+contador+'" class="form-control" onclick=""></td><td><input disabled type="text" name="txtPTot'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtPTot'+contador+'" class="form-control" onclick=""></td></tr>')
+        $('#tabla1 tr:last').after('<tr><td><input onchange="proTotal1(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad'+contador+'" class="form-control" value="0"></td><td><div class="input-group"><input disabled style=" width: 350px;" id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" type="text" class="form-control" placeholder="Producto..."><span class="input-group-btn"><button class="btn btn-default" type="button" id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" onclick="verProductos1(this)">Buscar</button></span></div></td><td><input value="0" disabled type="text" name="txtPUni'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtPUni'+contador+'" class="form-control" onclick=""></td><td><input value ="0" disabled type="text" name="txtPTot'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtPTot'+contador+'" class="form-control" onclick=""></td></tr>')
     }
     function quitar() {
 
@@ -369,6 +371,70 @@
                             }
                         }
                         if (bandera == "si"){
+                            document.getElementById("txtNomProducto").value = array[0]
+                            document.getElementById("txtPUni").value = array[1]  
+                        }
+
+                    }
+                }
+            }
+        }
+        );
+
+}
+
+function verProductos1(pro){
+        bootbox.dialog({
+            message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
+            '<br>'+
+            '<br>'+
+            '<div class="panel panel-primary">'+
+            '<div class="panel-heading"><h4>Listado de Productos</h4></div>'+
+            '<div class="panel-body">'+
+            '<table valign="middle" class="table">'+
+            '<thead>'+
+            '<tr>'+
+            '<th>Nombre</th>'+
+            '<th>Marca</th>'+
+            '<th>Stock Actual</th>'+
+            '<th>Precio</th>'+
+            '<th></th>'+
+            '</tr>'+
+            '</thead>'+
+            '<tbody>'+
+            '{% for producto in listaProductos %}'+
+            '<tr>'+
+            '<td>{{ producto.pro_nom }}</td>'+
+            '<td>{{ producto.pro_mar }}</td>'+
+            '<td>{{ producto.pro_sto_act }}</td>'+
+            '<td>{{ producto.pro_pre }}</td>'+
+            '<td><input type="radio" name="select" value="{{producto.pro_nom}}-{{ producto.pro_pre }}"></td>'+
+            '</tr>'+
+            '{% endfor %}'+
+            '</tbody>'+
+            '</table>'+
+            '</div>'+
+            '</div>'+
+            '</form>',
+            buttons: {
+                success: {
+                    label: "Aceptar",
+                    className: "btn-success",
+                    callback: function () {
+                        var name = $('input:radio[name=select]:checked').val()
+                        var array = name.split("-")
+                        var numid = ""+pro.id
+                        var num =  numid.replace(/[^.0-9]/g,'');
+                        
+
+                        for(var i=1 ; i<=vali; i++){
+                            if($("#txtNomProducto"+i).val() == array[0]){
+                                alert("Producto ya seleccionado")
+                                bandera1 = "no"
+
+                            }
+                        }
+                        if (bandera == "si"){
                             document.getElementById("txtNomProducto"+num).value = array[0]
                             document.getElementById("txtPUni"+num).value = array[1]  
                         }
@@ -380,6 +446,7 @@
         );
 
 }
+
 function verClientes(){
     bootbox.dialog({
         message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
