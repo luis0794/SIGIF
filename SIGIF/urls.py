@@ -56,5 +56,6 @@ urlpatterns = [
     url(r'^factura/nuevaFactura/$',newBill_view,name='new_factura'),
     url(r'^factura/Administrar/',listBill_view,name='list_factura'),
     url(r'^factura/generar_pdf/$', generar_pdf_Factura, name='pdf_factura'),
-
+    url(r'^factura/guardar/$', guardarFactura, name='save_factura'),
+    url(r'^factura/guardar/Detalle/$', guardarFacturaDetalle, name='save_factura_detalle'),
 ]

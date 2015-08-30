@@ -114,8 +114,6 @@ class Producto(models.Model):
         return self.pro_nom
 
 
-
-
 class Factura(models.Model):
     fac_num =models.IntegerField()
     fac_fec = models.DateField(max_length=10)

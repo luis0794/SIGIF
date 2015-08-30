@@ -1,4 +1,5 @@
 from unipath import Path
+from django.http import HttpResponse
 
 BASE_DIR = Path(__file__).ancestor(3)
 

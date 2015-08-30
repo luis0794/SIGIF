@@ -1,326 +1,435 @@
 {% extends "navbar.html" %}
 {%block title%}Agregar Factura{%endblock%}
 {% block content%}
-    {% if user.is_authenticated%}
-        <div class="panel panel-default">
-            <div class="panel-heading"><h4>Agregar Factura</h4></div>
-            <div class="panel-body">
-                <form class="form-horizontal form-group " method="post" id="formulario">
-                    <br>
-                    {% csrf_token %}
-                    <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center">
-                        <tr>
-                            <td width="100">&nbsp;</td>
-                            <td width="20">&nbsp;</td>
-                            <td width="80">&nbsp;</td>
-                            <td width="100">&nbsp;</td>
-                            <td width="50">&nbsp;</td>
-                            <td width="50">&nbsp;</td>
-                            <td width="100">&nbsp;</td>
-                            <td width="100">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <label> <font color="black" face="Arial" size=3>Factura Nº: </font></label>
-                            </td>
-                            <td colspan="2">
-                                <input disabled type="text" name="txtNumFactura" style=" width: 150px ; height: 30px ;color: black" id="txtNumFactura" class="form-control" onclick="#">
-                            </td>
-                        </tr>
+{% if user.is_authenticated%}
+<div class="panel panel-default">
+    <div class="panel-heading"><h4>Agregar Factura</h4></div>
+    <div class="panel-body">
+        <form class="form-horizontal form-group " method="POST" id="formulario">
+            <br>
+            {% csrf_token %}
+            <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center" id="tabla">
+                <tr>
+                    <td width="100">&nbsp;</td>
+                    <td width="20">&nbsp;</td>
+                    <td width="80">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                    <td width="50">&nbsp;</td>
+                    <td width="50">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label> <font color="black" face="Arial" size=3>Factura Nº: </font></label>
+                    </td>
+                    <td colspan="2">
+                        <input disabled type="text" name="txtNumFactura" style=" width: 150px ; height: 30px ;color: black" id="txtNumFactura" class="form-control" value="1">
+                    </td>
+                </tr>
 
-                        <tr><td><br></td></tr>
+                <tr><td><br></td></tr>
 
-                        <tr>
-                            <td colspan="2">
-                                <label> <font color="black" face="Arial" size=3>Cliente: </font></label>
+                <tr>
+                    <td colspan="2">
+                        <label> <font color="black" face="Arial" size=3>Cliente: </font></label>
+                    </td>
+                    <td colspan="2">
+                        <div class="input-group">
+                            <input disabled style=" width: 170px;" id="txtNomCliente" name="txtNomCliente" type="text" class="form-control" placeholder="Cliente...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="verClientes()">Buscar</button>
+                            </span>
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <label> <font color="black" face="Arial" size=3>Cedula: </font></label>
+                    </td>
+                    <td colspan="2">
+                        <input disabled type="text" name="txtCedula" style=" width: 140px ; height: 30px ;color: black" id="txtCedula" class="form-control" onclick="#">
+                    </td>
+                </tr>
+
+                <tr><td><br></td></tr>
+
+                <tr>
+                    <td colspan="2">
+                        <label> <font color="black" face="Arial" size=3>Direccion: </font></label>
+                    </td>
+                    <td colspan="6">
+                        <input disabled type="text" name="txtDireccion" style=" width: 640px ; height: 30px ;color: black" id="txtDireccion" class="form-control" onclick="#">
+                    </td>
+                </tr>
+
+                <tr><td><br></td></tr>
+
+                <tr>
+                    <td colspan="8">
+                        <table border="0" cellspacing="0" cellpadding="0" align="center" class="table table-striped" id="tabla1">
+                            <tr>
+                                <th width="10%">Cantidad</th>
+                                <th width="40%">Nombre Producto</th>
+                                <th width="20%">Precio Unitario</th>
+                                <th width="20%">Precio Total</th>
+                            </tr>
+                            <tr>
+                              <td>
+                                <input onchange="proTotal(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad" class="form-control" value="0">
                             </td>
-                            <td colspan="2">
+                            <td>
                                 <div class="input-group">
-                                    <input disabled style=" width: 170px;" id="txtNomCliente" name="txtNomCliente" type="text" class="form-control" placeholder="Cliente...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="verClientes()">Buscar</button>
-                    </span>
-                                </div>
-                            </td>
-                            <td colspan="2">
-                                <label> <font color="black" face="Arial" size=3>Cedula: </font></label>
-                            </td>
-                            <td colspan="2">
-                                <input disabled type="text" name="txtCedula" style=" width: 140px ; height: 30px ;color: black" id="txtCedula" class="form-control" onclick="#">
-                            </td>
-                        </tr>
+                                  <input disabled style=" width: 350px;" id="txtNomProducto" name="txtNomProducto" type="text" class="form-control" placeholder="Producto...">
+                                  <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" id="txtNomProducto" name="txtNomProducto" onclick="verProductos(this)">Buscar</button>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <input disabled type="text" name="txtPUni" style=" width: 80px ; height: 34px ;color: black" id="txtPUni" class="form-control" onclick="">
+                        </td>
+                        <td>
+                            <input value="0" disabled type="text" name="txtPTot" style=" width: 80px ; height: 34px ;color: black" id="txtPtot" class="form-control">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
 
-                        <tr><td><br></td></tr>
+        <tr><td><br></td></tr>
 
-                        <tr>
-                            <td colspan="2">
-                                <label> <font color="black" face="Arial" size=3>Direccion: </font></label>
-                            </td>
-                            <td colspan="6">
-                                <input disabled type="text" name="txtDireccion" style=" width: 640px ; height: 30px ;color: black" id="txtDireccion" class="form-control" onclick="#">
-                            </td>
-                        </tr>
+        <tr>
+            <td colspan="1">
+                <button onclick="agregar()" name="btnuser" id="btnuser" type="button" style="font-size: 15px; width: 40px; height: 30px">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true" > </span>
+                    <button name="btnuser" id="btnuser" type="button" style="font-size: 15px; width: 40px; height: 30px" onclick="quitar()">
+                        <span class="glyphicon glyphicon-minus" aria-hidden="true" > </span>
+                    </td>
+                </tr>
 
-                        <tr><td><br></td></tr>
+                <tr><td><br></td></tr>
 
-                        <tr>
-                            <td colspan="8">
-                                <table border="0" cellspacing="0" cellpadding="0" align="center" class="table table-striped" id="tabla1">
-                                    <tr>
-                                        <th width="10%">Cantidad</th>
-                                        <th width="40%">Nombre Producto</th>
-                                        <th width="20%">Precio Unitario</th>
-                                        <th width="20%">Precio Total</th>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="text" name="txtCantidad" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad1" class="form-control" onclick="">
-                                        </td>
-                                        <td>
-                                            <div class="input-group">
-                                                <input disabled style=" width: 350px;" id="1" name="1" type="text" class="form-control" placeholder="Producto...">
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-default" type="button" id="1" onclick="verProductos(this)">Buscar</button>
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input disabled type="text" name="txtPUni" style=" width: 80px ; height: 34px ;color: black" id="txtPUni" class="form-control" onclick="">
-                                        </td>
-                                        <td>
-                                            <input disabled type="text" name="txtPTot" style=" width: 80px ; height: 34px ;color: black" id="txtPtot" class="form-control" onclick="">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
+                <tr>
+                    <td colspan="8">
+                        <table border="0" cellspacing="0" cellpadding="0" align="center" class="table" id="tabla">
+                            <tr>
+                                <td colspan="2">
+                                    <label> <font color="black" face="Arial" size=3>Emitida por: </font></label>
+                                </td>
+                                <td colspan="2">
+                                    <input disabled type="text" name="txtNomUsu" style=" width: 140px ; height: 30px ;color: black" id="txtNomUsu" class="form-control" onclick="" value="{{user.usu_nom|capfirst}}">
+                                </td>
+                                <td colspan="3">
+                                    <label> <font color="black" face="Arial" size=3 >SubTotal </font></label>
+                                </td>
+                                <td colspan="2">
+                                    <input value="0" disabled type="text" name="txtSubTotal" style=" width: 80px ; height: 30px ;color: black" id="txtSubTotal" class="form-control" onclick="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
 
-                        <tr><td><br></td></tr>
+                                </td>
+                                <td colspan="2">
 
-                        <tr>
-                            <td colspan="1">
-                                <button onclick="agregar()" name="btnuser" id="btnuser" type="button" style="font-size: 15px; width: 40px; height: 30px">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true" > </span>
-                                    <button name="btnuser" id="btnuser" type="button" style="font-size: 15px; width: 40px; height: 30px" onclick="quitar()">
-                                        <span class="glyphicon glyphicon-minus" aria-hidden="true" > </span>
-                            </td>
-                        </tr>
+                                </td>
+                                <td colspan="2">
+                                    <label> <font color="black" face="Arial" size=3>I.V.A. </font></label>
+                                </td>
+                                <td colspan="2">
+                                    <input value="0" disabled type="text" name="txtIVA" style=" width: 80px ; height: 30px ;color: black" id="txtIVA" class="form-control" onclick="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
 
-                        <tr><td><br></td></tr>
+                                </td>
+                                <td colspan="2">
 
-                        <tr>
-                            <td colspan="8">
-                                <table border="0" cellspacing="0" cellpadding="0" align="center" class="table" id="tabla">
-                                    <tr>
-                                        <td colspan="2">
-                                            <label> <font color="black" face="Arial" size=3>Emitida por: </font></label>
-                                        </td>
-                                        <td colspan="2">
-                                            <input disabled type="text" name="txtNomUsu" style=" width: 140px ; height: 30px ;color: black" id="txtNomUsu" class="form-control" onclick="" value="{{user.usu_nom|capfirst}}">
-                                        </td>
-                                        <td colspan="3">
-                                            <label> <font color="black" face="Arial" size=3>SubTotal </font></label>
-                                        </td>
-                                        <td colspan="2">
-                                            <input disabled type="text" name="txtSubTotal" style=" width: 80px ; height: 30px ;color: black" id="txtSubTotal" class="form-control" onclick="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
+                                </td>
+                                <td colspan="2">
+                                    <label> <font color="black" face="Arial" size=3>Total </font></label>
+                                </td>
+                                <td colspan="2">
+                                    <input value="10" disabled type="text" name="txtTotal" style=" width: 80px ; height: 30px ;color: black" id="txtTotal" class="form-control" onclick="">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
 
-                                        </td>
-                                        <td colspan="2">
-
-                                        </td>
-                                        <td colspan="2">
-                                            <label> <font color="black" face="Arial" size=3>I.V.A. </font></label>
-                                        </td>
-                                        <td colspan="2">
-                                            <input disabled type="text" name="txtIVA" style=" width: 80px ; height: 30px ;color: black" id="txtIVA" class="form-control" onclick="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-
-                                        </td>
-                                        <td colspan="2">
-
-                                        </td>
-                                        <td colspan="2">
-                                            <label> <font color="black" face="Arial" size=3>Total </font></label>
-                                        </td>
-                                        <td colspan="2">
-                                            <input disabled type="text" name="txtTotal" style=" width: 80px ; height: 30px ;color: black" id="txtTotal" class="form-control" onclick="">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <tr><td><br></td></tr>
-                    </table>
-                    <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center">
-                        <tr>
-                            <td width="100">&nbsp;</td>
-                            <td width="20">&nbsp;</td>
-                            <td width="80">&nbsp;</td>
-                            <td width="100">&nbsp;</td>
-                            <td width="50">&nbsp;</td>
-                            <td width="50">&nbsp;</td>
-                            <td width="100">&nbsp;</td>
-                            <td width="100">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td colspan="1">
-                                <input class="btn-danger btn"  onclick=" window.location.href='{%url 'index'%}'"value="Cancelar">
-                            </td>
-                            <td colspan="1">
-                                <input type="submit" class="btn-primary btn"  value="Guardar">
-                            </td>
-                            <td colspan="1">
-                                <input type="submit" class="btn-primary btn"  value="Imprimir">
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-        </div>
-    {% else %}
-        <script type="text/javascript">
-            setTimeout("window.location.href = '{%url 'login'%}'", 0,5);
-        </script>
-    {% endif %}
+                <tr><td><br></td></tr>
+            </table>
+            <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center">
+                <tr>
+                    <td width="100">&nbsp;</td>
+                    <td width="20">&nbsp;</td>
+                    <td width="80">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                    <td width="50">&nbsp;</td>
+                    <td width="50">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="1">
+                        <input class="btn-danger btn"  onclick=" window.location.href='{%url 'index'%}'" value="Cancelar">
+                    </td>
+                    <td colspan="1">
+                        <button class="btn-primary btn"  value="Guardar" onclick="guardar()">lol</button>
+                    </td>
+                    <td colspan="1">
+                        <input type="submit" class="btn-primary btn"  value="Imprimir">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+{% else %}
+<script type="text/javascript">
+    setTimeout("window.location.href = '{%url 'login'%}'", 0,5);
+</script>
+{% endif %}
 {%endblock%}
 {% block js_custom %}
-    <script type="text/javascript">
-        var dir=1;
-        var vali =1;
-        var contador=1;
-        var contador1=1;
-        function agregar() {
-            dir++;
-            vali++;
-            contador++;
-            $('#tabla1 tr:last').after('<tr><td><input type="text" name="txtCantidad'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad'+contador+'" class="form-control" onclick="#"></td><td><div class="input-group"><input disabled style=" width: 350px;" id="1'+contador+'" name="1'+contador+'" type="text" class="form-control" placeholder="Producto..."><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="verProductos()">Buscar</button></span></div></td><td><input disabled type="text" name="txtPUni'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtPUni'+contador+'" class="form-control" onclick=""></td><td><input disabled type="text" name="txtPTot'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtPTot'+contador+'" class="form-control" onclick=""></td></tr>')
-        }
-        function quitar() {
+<script type="text/javascript">
+    var dir=1;
+    var vali =1;
+    var contador=1;
+    var contador1=10;
+    var bandera = "si"
 
-            if (dir > 1) {
-                $('#tabla1 tr:last').remove()
+    function guardar(){
+        var numFac = document.getElementById('txtNumFactura').value;
+        var nomCli = document.getElementById('txtNomCliente').value;
+        var dirCli = document.getElementById('txtDireccion').value;
+        var cedCli = document.getElementById('txtCedula').value;
+        var subTot = document.getElementById('txtSubTotal').value;
+        var iva = document.getElementById('txtIVA').value;
+        var total = document.getElementById('txtTotal').value;
+        var tabla = document.getElementById('tabla1');
+        var nomPro = document.getElementById('txtNomProducto').value;
 
-                dir--;
+        if ((parseInt(total) == "0")) {
+            alert("no existen prductos");
+            return false;
+        }else{
+            alert(tabla.rows.length)
+            if(tabla.rows.length >=2 ){
+                dic = [];
+                var va = 0;
+                for(var c=1 ; c < tabla.rows.length; c++){
+                    cantidad = document.getElementById("tabla1").rows[c].cells[0].innerHTML;
+                    PreUni = document.getElementById("tabla1").rows[c].cells[0].innerHTML;
+                    PreTot = document.getElementById("tabla1").rows[c].cells[0].innerHTML;
+                    dic.push({'cantidad': cantidad, 'PreUni': PreUni, 'PreTot': PreTot});
+                }
+
+                $.ajax({
+                    url: '/factura/guardar/',
+                    dataType: 'json',
+                    data: {'numFac':numFac, 'subTot':subTot, 'iva':iva, 'txtTotal':total, 'cedCli':cedCli},
+                    type: 'GET',
+                    success: function(data){
+                        for (var x = 0; x < dic.length; x++) {
+                            $.ajax({
+                                url: '/factura/guardar/Detalle/',
+                                dateTime: 'json',
+                                data: {'cantidad': dic[x].cantidad, 'PreUni': dic[x].PreUni, 'PreTot': dic[x].PreTot, 'idFac':data, 'nomPro':nomPro},
+                                type: 'GET',
+                                success: function (data) {
+
+                                }
+                            });
+                        }
+                    }
+                });
             }
         }
-        function verProductos(id){
+    }
+
+    function proTotal(can){
+        if($("#txtPUni").val() == ""){
             bootbox.dialog({
-                        message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
-                        '<br>'+
-                        '<br>'+
-                        '<div class="panel panel-primary">'+
-                        '<div class="panel-heading"><h4>Listado de Productos</h4></div>'+
-                        '<div class="panel-body">'+
-                        '<table valign="middle" class="table">'+
-                        '<thead>'+
-                        '<tr>'+
-                        '<th>Nombre</th>'+
-                        '<th>Marca</th>'+
-                        '<th>Stock Actual</th>'+
-                        '<th>Precio</th>'+
-                        '<th></th>'+
-                        '</tr>'+
-                        '</thead>'+
-                        '<tbody>'+
-                        '{% for producto in listaProductos %}'+
-                            '<tr>'+
-                            '<td>{{ producto.pro_nom }}</td>'+
-                            '<td>{{ producto.pro_mar }}</td>'+
-                            '<td>{{ producto.pro_sto_act }}</td>'+
-                            '<td>{{ producto.pro_pre }}</td>'+
-                            '<td><input type="radio" name="select" value="{{producto.pro_nom}}-{{ producto.pro_pre }}"></td>'+
-                            '</tr>'+
-                            '{% endfor %}'+
-                        '</tbody>'+
-                        '</table>'+
-                        '</div>'+
-                        '</div>'+
-                        '</form>',
-                        buttons: {
-                            success: {
-                                label: "Aceptar",
-                                className: "btn-success",
-                                callback: function () {
-                                    var name = $('input:radio[name=select]:checked').val()
-                                    var array = name.split("-")
-                                    var bandera = "si"
-
-
-                                    for(var i=1 ; i<=vali; i++){
-                                        if($("#"+i).val() == name){
-                                            alert("Producto ya seleccionado")
-                                            bandera = "no"
-                                        }
-                                    }
-                                    if (bandera == "si"){
-                                        document.getElementById("").value = array[0]
-                                        document.getElementById("txtPuni").value = array[1]
-                                    }
-
-                                }
-                            }
+                message: 'Primero elija un producto',
+                buttons: {
+                    success: {
+                        label: "Aceptar",
+                        className: "btn-success",
+                        callback: function () {
+                            document.getElementById("txtCantidad").value = 0
                         }
                     }
+                }
+            }
             );
+        }else{
+            var cant = parseInt(can.value)
+            var uniS = $("#txtPUni").val()
+            var uniF = parseFloat(uniS.replace(",","."))
+            var tot = cant*uniF
+            document.getElementById("txtPtot").value=tot
         }
-        function verClientes(){
+        
+    }
+
+    function proTotal1(pro){
+        var numid = ""+pro.id
+        var num =  numid.replace(/[^.0-9]/g,'');
+        if($("#txtPUni"+num).val() == ""){
             bootbox.dialog({
-                        message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
-                        '<br>'+
-                        '<br>'+
-                        '<div class="panel panel-primary">'+
-                        '<div class="panel-heading"><h4>Listado de Clientes</h4></div>'+
-                        '<div class="panel-body">'+
-                        '<table valign="middle" class="table">'+
-                        '<thead>'+
-                        '<tr>'+
-                        '<th>Cedula</th>'+
-                        '<th>Nombres</th>'+
-                        '<th>Apellidos</th>'+
-                        '<th>Direccion</th>'+
-                        '<th>Telefono</th>'+
-                        '<th></th>'+
-                        '</tr>'+
-                        '</thead>'+
-                        '<tbody>'+
-                        '{% for cliente in listaClientes %}'+
-                            '<tr>'+
-                            '<td>{{ cliente.cli_ced }}</td>'+
-                            '<td>{{ cliente.cli_nom }}</td>'+
-                            '<td>{{ cliente.cli_ape }}</td>'+
-                            '<td>{{ cliente.cli_dir }}</td>'+
-                            '<td>{{ cliente.cli_tel }}</td>'+
-                            '<td><input type="radio" name="select" value="{{ cliente.cli_ced }}-{{cliente.cli_nom}} {{ cliente.cli_ape }}-{{ cliente.cli_dir }}"></td>'+
-                            '</tr>'+
-                            '{% endfor %}'+
-                        '</tbody>'+
-                        '</table>'+
-                        '</div>'+
-                        '</div>'+
-                        '</form>',
-                        buttons: {
-                            success: {
-                                label: "Aceptar",
-                                className: "btn-success",
-                                callback: function () {
-                                    var name = $('input:radio[name=select]:checked').val()
-                                    var array = name.split("-")
-                                    document.getElementById("txtCedula").value = array[0]
-                                    document.getElementById("txtNomCliente").value = array[1]
-                                    document.getElementById("txtDireccion").value = array[2]
-                                }
-                            }
+                message: 'Primero elija un producto',
+                buttons: {
+                    success: {
+                        label: "Aceptar",
+                        className: "btn-success",
+                        callback: function () {
+                            document.getElementById("txtCantidad"+num).value = 0
                         }
                     }
+                }
+            }
             );
+        }else{
+            var cant = $("#txtCantidad"+num).val()
+            var cantI = parseInt(cant)
+            var uniS = $("#txtPUni"+num).val()
+            var uniF = parseFloat(uniS.replace(",","."))
+            var tot = cantI*uniF
+            document.getElementById("txtPtot"+num).value=tot
         }
-    </script>
+        
+    }
+
+    function agregar() {
+        dir++;
+        vali++;
+        contador++;
+        $('#tabla1 tr:last').after('onchange="proTotal1(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad'+contador+'" class="form-control" value="0"></td><td><div class="input-group"><input disabled style=" width: 350px;" id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" type="text" class="form-control" placeholder="Producto..."><span class="input-group-btn"><button class="btn btn-default" type="button" id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" onclick="verProductos(this)">Buscar</button></span></div></td><td><input disabled type="text" name="txtPUni'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtPUni'+contador+'" class="form-control" onclick=""></td><td><input disabled type="text" name="txtPTot'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtPTot'+contador+'" class="form-control" onclick=""></td></tr>')
+    }
+    function quitar() {
+
+        if (dir > 1) {
+            $('#tabla1 tr:last').remove()
+
+            dir--;
+        }   
+    }
+
+    
+
+    function verProductos(pro){
+        bootbox.dialog({
+            message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
+            '<br>'+
+            '<br>'+
+            '<div class="panel panel-primary">'+
+            '<div class="panel-heading"><h4>Listado de Productos</h4></div>'+
+            '<div class="panel-body">'+
+            '<table valign="middle" class="table">'+
+            '<thead>'+
+            '<tr>'+
+            '<th>Nombre</th>'+
+            '<th>Marca</th>'+
+            '<th>Stock Actual</th>'+
+            '<th>Precio</th>'+
+            '<th></th>'+
+            '</tr>'+
+            '</thead>'+
+            '<tbody>'+
+            '{% for producto in listaProductos %}'+
+            '<tr>'+
+            '<td>{{ producto.pro_nom }}</td>'+
+            '<td>{{ producto.pro_mar }}</td>'+
+            '<td>{{ producto.pro_sto_act }}</td>'+
+            '<td>{{ producto.pro_pre }}</td>'+
+            '<td><input type="radio" name="select" value="{{producto.pro_nom}}-{{ producto.pro_pre }}"></td>'+
+            '</tr>'+
+            '{% endfor %}'+
+            '</tbody>'+
+            '</table>'+
+            '</div>'+
+            '</div>'+
+            '</form>',
+            buttons: {
+                success: {
+                    label: "Aceptar",
+                    className: "btn-success",
+                    callback: function () {
+                        var name = $('input:radio[name=select]:checked').val()
+                        var array = name.split("-")
+                        var numid = ""+pro.id
+                        var num =  numid.replace(/[^.0-9]/g,'');
+                        
+
+                        for(var i=1 ; i<=vali; i++){
+                            if($("#txtNomProducto"+i).val() == array[0]){
+                                alert("Producto ya seleccionado")
+                                bandera = "no"
+                            }
+                        }
+                        if (bandera == "si"){
+                            document.getElementById("txtNomProducto"+num).value = array[0]
+                            document.getElementById("txtPUni"+num).value = array[1]  
+                        }
+
+                    }
+                }
+            }
+        }
+        );
+
+}
+function verClientes(){
+    bootbox.dialog({
+        message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
+        '<br>'+
+        '<br>'+
+        '<div class="panel panel-primary">'+
+        '<div class="panel-heading"><h4>Listado de Clientes</h4></div>'+
+        '<div class="panel-body">'+
+        '<table valign="middle" class="table">'+
+        '<thead>'+
+        '<tr>'+
+        '<th>Cedula</th>'+
+        '<th>Nombres</th>'+
+        '<th>Apellidos</th>'+
+        '<th>Direccion</th>'+
+        '<th>Telefono</th>'+
+        '<th></th>'+
+        '</tr>'+
+        '</thead>'+
+        '<tbody>'+
+        '{% for cliente in listaClientes %}'+
+        '<tr>'+
+        '<td>{{ cliente.cli_ced }}</td>'+
+        '<td>{{ cliente.cli_nom }}</td>'+
+        '<td>{{ cliente.cli_ape }}</td>'+
+        '<td>{{ cliente.cli_dir }}</td>'+
+        '<td>{{ cliente.cli_tel }}</td>'+
+        '<td><input type="radio" name="select" value="{{ cliente.cli_ced }}-{{cliente.cli_nom}} {{ cliente.cli_ape }}-{{ cliente.cli_dir }}"></td>'+
+        '</tr>'+
+        '{% endfor %}'+
+        '</tbody>'+
+        '</table>'+
+        '</div>'+
+        '</div>'+
+        '</form>',
+        buttons: {
+            success: {
+                label: "Aceptar",
+                className: "btn-success",
+                callback: function () {
+                    var name = $('input:radio[name=select]:checked').val()
+                    var array = name.split("-")
+                    document.getElementById("txtCedula").value = array[0]
+                    document.getElementById("txtNomCliente").value = array[1]
+                    document.getElementById("txtDireccion").value = array[2]
+                }
+            }
+        }
+    }
+    );
+}
+</script>
 {% endblock js_custom %}
