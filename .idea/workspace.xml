@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3fac1784-95fa-4e06-9127-10721a87ff03" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/Pedidos/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/Factura/templates/addbill.html" afterPath="$PROJECT_DIR$/apps/Factura/templates/addbill.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/Pedidos/templates/addorder.html" afterPath="$PROJECT_DIR$/apps/Pedidos/templates/addorder.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/security/models.py" afterPath="$PROJECT_DIR$/apps/security/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/navbar.html" afterPath="$PROJECT_DIR$/templates/navbar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/Factura/views.py" afterPath="$PROJECT_DIR$/apps/Factura/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/Pedidos/views.py" afterPath="$PROJECT_DIR$/apps/Pedidos/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="E:\Github\SIGIF\apps\Pedidos\templates\addorder.html" afterPath="$PROJECT_DIR$/apps/Pedidos/templates/addorder1.html" />
+      <change type="MOVED" beforePath="E:\Github\SIGIF\apps\Factura\templates\addbill.html" afterPath="$PROJECT_DIR$/apps/Factura/templates/addbill1.html" />
     </list>
     <ignored path="SIGIF.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,15 +27,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="addorder1.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/Pedidos/templates/addorder1.html">
+      <file leaf-file-name="addbill1.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/Factura/templates/addbill1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.8846154">
-              <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="32" />
+            <state vertical-scroll-proportion="-4.4615383">
+              <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="523" selection-end-column="24" />
               <folding>
-                <element signature="e#7086#7867#0#HTML" expanded="false" />
-                <element signature="e#7894#8016#0#HTML" expanded="false" />
+                <element signature="e#5169#5219#0#HTML" expanded="true" />
+                <element signature="e#5379#5429#0#HTML" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addbill.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/Factura/templates/addbill.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.29928315">
+              <caret line="275" column="258" selection-start-line="275" selection-start-column="258" selection-end-line="275" selection-end-column="258" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/Factura/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="118" column="38" selection-start-line="118" selection-start-column="38" selection-end-line="118" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -49,21 +63,8 @@
       <file leaf-file-name="addorder.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/Pedidos/templates/addorder.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.2692308">
-              <caret line="10" column="92" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="92" />
-              <folding>
-                <element signature="e#607#628#0#HTML" expanded="true" />
-                <element signature="e#5362#5484#0#HTML" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="navbar.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/navbar.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29928315">
-              <caret line="56" column="41" selection-start-line="56" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+            <state vertical-scroll-proportion="-16.346153">
+              <caret line="88" column="22" selection-start-line="78" selection-start-column="16" selection-end-line="88" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -91,30 +92,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/Pedidos/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="88" column="90" selection-start-line="88" selection-start-column="84" selection-end-line="88" selection-end-column="90" />
-              <folding>
-                <element signature="e#0#92#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="agregar_pedido.html" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Roaming/Skype/My Skype Received Files/agregar_pedido.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.807693">
-              <caret line="15" column="86" selection-start-line="15" selection-start-column="79" selection-end-line="15" selection-end-column="86" />
-              <folding>
-                <marker date="1440978878707" expanded="true" signature="3371:3404" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -132,13 +109,15 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/apps/Usuarios/views.py" />
-        <option value="$PROJECT_DIR$/apps/Factura/templates/addbill.html" />
-        <option value="$PROJECT_DIR$/apps/Factura/views.py" />
         <option value="$PROJECT_DIR$/apps/security/models.py" />
         <option value="$PROJECT_DIR$/apps/Pedidos/forms.py" />
         <option value="$PROJECT_DIR$/apps/Pedidos/views.py" />
         <option value="$PROJECT_DIR$/templates/navbar.html" />
+        <option value="$PROJECT_DIR$/apps/Factura/templates/addbill.py" />
+        <option value="$PROJECT_DIR$/apps/Factura/templates/addbill1.html" />
         <option value="$PROJECT_DIR$/apps/Pedidos/templates/addorder.html" />
+        <option value="$PROJECT_DIR$/apps/Factura/views.py" />
+        <option value="$PROJECT_DIR$/apps/Factura/templates/addbill.html" />
       </list>
     </option>
   </component>
@@ -241,6 +220,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="security" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SIGIF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SIGIF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Factura" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SIGIF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SIGIF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Factura" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -514,18 +533,13 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/apps/Factura/templates/addbill.html">
+    <entry file="file://$PROJECT_DIR$/apps/Factura/templates/addbill1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#11613#12399#0#HTML" expanded="false" />
-            <element signature="e#12428#13360#0#HTML" expanded="false" />
-            <element signature="e#13387#14496#0#HTML" expanded="false" />
-            <element signature="e#14520#14626#0#HTML" expanded="false" />
-            <element signature="e#14658#17520#0#HTML" expanded="false" />
-            <element signature="e#17553#20844#0#HTML" expanded="false" />
-            <element signature="e#20872#22802#0#HTML" expanded="false" />
+            <element signature="e#5169#5219#0#HTML" expanded="true" />
+            <element signature="e#5379#5429#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -551,18 +565,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/Factura/templates/addbill.html">
+    <entry file="file://$PROJECT_DIR$/apps/Factura/templates/addbill1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#11613#12399#0#HTML" expanded="false" />
-            <element signature="e#12428#13360#0#HTML" expanded="false" />
-            <element signature="e#13387#14496#0#HTML" expanded="false" />
-            <element signature="e#14520#14626#0#HTML" expanded="false" />
-            <element signature="e#14658#17520#0#HTML" expanded="false" />
-            <element signature="e#17553#20844#0#HTML" expanded="false" />
-            <element signature="e#20872#22802#0#HTML" expanded="false" />
+            <element signature="e#5169#5219#0#HTML" expanded="true" />
+            <element signature="e#5379#5429#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -606,40 +615,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/Factura/templates/addbill.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.884615">
-          <caret line="125" column="63" selection-start-line="125" selection-start-column="63" selection-end-line="125" selection-end-column="63" />
-          <folding>
-            <element signature="e#11613#12399#0#HTML" expanded="false" />
-            <element signature="e#12428#13360#0#HTML" expanded="false" />
-            <element signature="e#13387#14496#0#HTML" expanded="false" />
-            <element signature="e#14520#14626#0#HTML" expanded="false" />
-            <element signature="e#14658#17520#0#HTML" expanded="false" />
-            <element signature="e#17553#20844#0#HTML" expanded="false" />
-            <element signature="e#20872#22802#0#HTML" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/Factura/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="110" column="64" selection-start-line="110" selection-start-column="64" selection-end-line="110" selection-end-column="64" />
-          <folding>
-            <element signature="e#0#92#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SIGIF/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="37" selection-start-line="46" selection-start-column="37" selection-end-line="46" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SIGIF/wsgi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -648,19 +623,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/navbar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29928315">
+          <caret line="56" column="41" selection-start-line="56" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/AppData/Roaming/Skype/My Skype Received Files/agregar_pedido.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.807693">
+        <state vertical-scroll-proportion="0.45698926">
           <caret line="15" column="86" selection-start-line="15" selection-start-column="79" selection-end-line="15" selection-end-column="86" />
           <folding>
-            <marker date="1440978878707" expanded="true" signature="3371:3404" placeholder="..." />
+            <marker date="1440978878707" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/Pedidos/templates/addorder1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8846154">
+        <state vertical-scroll-proportion="0.27419356">
           <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="32" />
           <folding>
             <element signature="e#7086#7867#0#HTML" expanded="false" />
@@ -669,21 +652,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/security/models.py">
+    <entry file="file://$PROJECT_DIR$/apps/security/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="139" column="55" selection-start-line="139" selection-start-column="55" selection-end-line="139" selection-end-column="55" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/Pedidos/views.py">
+    <entry file="file://$PROJECT_DIR$/SIGIF/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="88" column="90" selection-start-line="88" selection-start-column="84" selection-end-line="88" selection-end-column="90" />
-          <folding>
-            <element signature="e#0#92#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.38869864">
+          <caret line="46" column="37" selection-start-line="46" selection-start-column="37" selection-end-line="46" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -697,21 +680,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/Pedidos/templates/addorder.html">
+    <entry file="file://$PROJECT_DIR$/apps/Pedidos/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.2692308">
-          <caret line="10" column="92" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="92" />
+        <state vertical-scroll-proportion="0.64041096">
+          <caret line="88" column="90" selection-start-line="88" selection-start-column="84" selection-end-line="88" selection-end-column="90" />
           <folding>
-            <element signature="e#607#628#0#HTML" expanded="true" />
-            <element signature="e#5362#5484#0#HTML" expanded="false" />
+            <element signature="e#0#92#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/navbar.html">
+    <entry file="file://$PROJECT_DIR$/apps/security/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="139" column="55" selection-start-line="139" selection-start-column="55" selection-end-line="139" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/Factura/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="118" column="38" selection-start-line="118" selection-start-column="38" selection-end-line="118" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/Pedidos/templates/addorder.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.346153">
+          <caret line="88" column="22" selection-start-line="78" selection-start-column="16" selection-end-line="88" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/Factura/templates/addbill1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.4615383">
+          <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="523" selection-end-column="24" />
+          <folding>
+            <element signature="e#5169#5219#0#HTML" expanded="true" />
+            <element signature="e#5379#5429#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/Factura/templates/addbill.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29928315">
-          <caret line="56" column="41" selection-start-line="56" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <caret line="275" column="258" selection-start-line="275" selection-start-column="258" selection-end-line="275" selection-end-column="258" />
           <folding />
         </state>
       </provider>

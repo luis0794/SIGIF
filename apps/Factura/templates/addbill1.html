@@ -1,160 +1,197 @@
 {% extends "navbar.html" %}
 {%block title%}Agregar Factura{%endblock%}
 {% block content%}
-    <div class="panel panel-success">
-        <div class="panel-heading"><h4>Agregar Factura</h4></div>
-        <div class="panel-body">
-            <form method="POST" id="formulario">{% csrf_token %}
-                <div class="row">
-                    <div class="col-md-2">
+{% if user.is_authenticated%}
+<div class="panel panel-default">
+    <div class="panel-heading"><h4>Agregar Factura</h4></div>
+    <div class="panel-body">
+        <form class="form-horizontal form-group " method="POST" id="formulario">
+            <br>
+            {% csrf_token %}
+            <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center" id="tabla">
+                <tr>
+                    <td width="100">&nbsp;</td>
+                    <td width="20">&nbsp;</td>
+                    <td width="80">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                    <td width="50">&nbsp;</td>
+                    <td width="50">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
                         <label> <font color="black" face="Arial" size=3>Factura Nº: </font></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="text" name="txtNumFactura" id="txtNumFactura" class="form-control" value="1">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-2">
+                    </td>
+                    <td colspan="2">
+                        <input type="text" name="txtNumFactura" style=" width: 150px ; height: 30px ;color: black" id="txtNumFactura" class="form-control" value="1">
+                    </td>
+                </tr>
+
+                <tr><td><br></td></tr>
+
+                <tr>
+                    <td colspan="2">
                         <label> <font color="black" face="Arial" size=3>Cliente: </font></label>
-                    </div>
-                    <div class="col-md-4">
+                    </td>
+                    <td colspan="2">
                         <div class="input-group">
-                            <input disabled  id="txtNomCliente" name="txtNomCliente" type="text" class="form-control" placeholder="Cliente...">
+                            <input disabled style=" width: 170px;" id="txtNomCliente" name="txtNomCliente" type="text" class="form-control" placeholder="Cliente...">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="verClientes()">Buscar</button>
                             </span>
                         </div>
-                    </div>
-                    <div class="col-md-2">
+                    </td>
+                    <td colspan="2">
                         <label> <font color="black" face="Arial" size=3>Cedula: </font></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="text" name="txtCedula" id="txtCedula" class="form-control" >
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-2">
+                    </td>
+                    <td colspan="2">
+                        <input type="text" name="txtCedula" style=" width: 140px ; height: 30px ;color: black" id="txtCedula" class="form-control" >
+                    </td>
+                </tr>
+
+                <tr><td><br></td></tr>
+
+                <tr>
+                    <td colspan="2">
                         <label> <font color="black" face="Arial" size=3>Direccion: </font></label>
-                    </div>
-                    <div class="col-md-8">
-                        <input disabled type="text" name="txtDireccion" id="txtDireccion" class="form-control" >
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <table id="tabla1" class="table table-striped">
-                        <thead>
+                    </td>
+                    <td colspan="6">
+                        <input disabled type="text" name="txtDireccion" style=" width: 640px ; height: 30px ;color: black" id="txtDireccion" class="form-control" onclick="#">
+                    </td>
+                </tr>
+
+                <tr><td><br></td></tr>
+
+                <tr>
+                    <td colspan="8">
+                        <table border="0" cellspacing="0" cellpadding="0" align="center" class="table table-striped" id="tabla1">
                             <tr>
                                 <th width="10%">Cantidad</th>
                                 <th width="40%">Nombre Producto</th>
                                 <th width="20%">Precio Unitario</th>
                                 <th width="20%">Precio Total</th>
                             </tr>
-                        </thead>
-                        <tbody>
                             <tr>
                               <td>
-                                <input onchange="proTotal(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad"  id="txtCantidad" class="form-control" value="0">
-                                </td>
-                              <td>
-                                  <div class="input-group">
-                                    <input disabled id="txtNomProducto" name="txtNomProducto" type="text" class="form-control" placeholder="Producto...">
-                                    <span class="input-group-btn">
+                                <input onchange="proTotal(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad" class="form-control" value="0">
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                  <input disabled style=" width: 350px;" id="txtNomProducto" name="txtNomProducto" type="text" class="form-control" placeholder="Producto...">
+                                  <span class="input-group-btn">
                                     <button class="btn btn-default" type="button" id="txtNomProducto" name="txtNomProducto" onclick="verProductos(this)">Buscar</button>
-                                    </span>
-                                  </div>
-                              </td>
-                              <td>
-                                <input disabled value="0" type="text" name="txtPUni" id="txtPUni" class="form-control" onclick="">
-                              </td>
-                              <td>
-                                <input onchange="total()" value="0" disabled type="text" name="txtPTot" id="txtPtot" class="form-control">
-                              </td>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <input disabled value="0" type="text" name="txtPUni" style=" width: 80px ; height: 34px ;color: black" id="txtPUni" class="form-control" onclick="">
+                        </td>
+                        <td>
+                            <input onchange="total()" value="0" disabled type="text" name="txtPTot" style=" width: 80px ; height: 34px ;color: black" id="txtPtot" class="form-control">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr><td><br></td></tr>
+
+        <tr>
+            <td colspan="1">
+                <button onclick="agregar()" name="btnuser" id="btnuser" type="button" style="font-size: 15px; width: 40px; height: 30px">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true" > </span>
+                    <button name="btnuser" id="btnuser" type="button" style="font-size: 15px; width: 40px; height: 30px" onclick="quitar()">
+                        <span class="glyphicon glyphicon-minus" aria-hidden="true" > </span>
+                    </td>
+                </tr>
+
+                <tr><td><br></td></tr>
+
+                <tr>
+                    <td colspan="8">
+                        <table border="0" cellspacing="0" cellpadding="0" align="center" class="table" id="tabla">
+                            <tr>
+                                <td colspan="2">
+
+                                    <label> <font color="black" face="Arial" size=3>Emitida por: </font></label>
+                                </td>
+                                <td colspan="2">
+                                    <input type="text" name="txtNomUsu" style=" width: 140px ; height: 30px ;color: black" id="txtNomUsu" class="form-control" onclick="" value="{{user.usu_nom|capfirst}}">
+                                </td>
+                                <td colspan="3">
+                                    <label> <font color="black" face="Arial" size=3 >SubTotal </font></label>
+                                </td>
+                                <td colspan="2">
+                                    <input value="0" type="text" name="txtSubTotal" style=" width: 80px ; height: 30px ;color: black" id="txtSubTotal" class="form-control" onclick="">
+                                </td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-1">
-                        <button class="btn btn-success" onclick="agregar()" name="btnuser" id="btnuser" type="button"><span class="glyphicon glyphicon-plus"> </span></button>
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-danger" name="btnuser" id="btnuser" type="button"  onclick="quitar()"><span class="glyphicon glyphicon-minus"> </span></button>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-2">
-                        <label> <font color="black" face="Arial" size=3>Emitida por: </font></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="text" name="txtNomUsu"  id="txtNomUsu" class="form-control" value="{{user.usu_nom|capfirst}}">
-                    </div>
-                    <div class="col-md-3">
+                            <tr>
+                                <td colspan="2">
 
-                    </div>
-                    <div class="col-md-3">
-                        <label> <font color="black" face="Arial" size=3 >SubTotal </font></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input value="0" type="text" name="txtSubTotal" id="txtSubTotal" class="form-control" >
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-2">
+                                </td>
+                                <td colspan="2">
 
-                    </div>
-                    <div class="col-md-2">
+                                </td>
+                                <td colspan="2">
+                                    <label> <font color="black" face="Arial" size=3>I.V.A. </font></label>
+                                </td>
+                                <td colspan="2">
+                                    <input value="0" disabled type="text" name="txtIVA" style=" width: 80px ; height: 30px ;color: black" id="txtIVA" class="form-control" onclick="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
 
-                    </div>
-                    <div class="col-md-3">
+                                </td>
+                                <td colspan="2">
 
-                    </div>
-                    <div class="col-md-3">
-                        <label> <font color="black" face="Arial" size=3>I.V.A. </font></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input value="0" disabled type="text" name="txtIVA"  id="txtIVA" class="form-control">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-2">
+                                </td>
+                                <td colspan="2">
+                                    <label> <font color="black" face="Arial" size=3>Total </font></label>
+                                </td>
+                                <td colspan="2">
+                                    <input value="0" disabled type="text" name="txtTotal" style=" width: 80px ; height: 30px ;color: black" id="txtTotal" class="form-control">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
 
-                    </div>
-                    <div class="col-md-2">
-
-                    </div>
-                    <div class="col-md-3">
-
-                    </div>
-                    <div class="col-md-3">
-                        <label> <font color="black" face="Arial" size=3>Total </font></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input value="0" disabled type="text" name="txtTotal" id="txtTotal" class="form-control">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-1">
-                        <button class="btn btn-success" type="submit" >Guargdar</button>
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-primary" >Imprimir</button>
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-danger" >Cancelar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+                <tr><td><br></td></tr>
+            </table>
+            <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center">
+                <tr>
+                    <td width="100">&nbsp;</td>
+                    <td width="20">&nbsp;</td>
+                    <td width="80">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                    <td width="50">&nbsp;</td>
+                    <td width="50">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                    <td width="100">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="1">
+                        <input class="btn-danger btn"  onclick="location.href='{%url 'index'%}'" value="Cancelar">
+                    </td>
+                    <td colspan="1">
+                        <button class="btn-primary btn" type="submit" value="Guardar">Guardar</button>
+                    </td>
+                    <td colspan="1">
+                        <input type="submit" class="btn-primary btn"  value="Imprimir">
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
-{%endblock content%}
+</div>
+{% else %}
+<script type="text/javascript">
+    setTimeout("window.location.href = '{%url 'login'%}'", 0,5);
+</script>
+{% endif %}
+{%endblock%}
 {% block js_custom %}
 <script type="text/javascript">
     var dir=1;
@@ -235,7 +272,7 @@
             document.getElementById("txtPtot").value=tot
             total()
         }
-
+        
     }
 
     function proTotal1(pro){
@@ -264,7 +301,7 @@
             alert(tot)
             document.getElementById("txtPTot"+num).value=tot
         }
-
+        
     }
 
 
@@ -273,7 +310,7 @@
         dir++;
         vali++;
         contador++;
-        $('#tabla1 tr:last').after('<tr><td><input onchange="proTotal1(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad'+contador+'" id="txtCantidad'+contador+'" class="form-control" value="0"></td><td><div class="input-group"><input disabled id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" type="text" class="form-control" placeholder="Producto..."><span class="input-group-btn"><button class="btn btn-default" type="button" id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" onclick="verProductos1(this)">Buscar</button></span></div></td><td><input value="0" disabled type="text" name="txtPUni'+contador+'" id="txtPUni'+contador+'" class="form-control" onclick=""></td><td><input onchange="total()" value ="0" disabled type="text" name="txtPTot'+contador+'" id="txtPTot'+contador+'" class="form-control" onclick=""></td></tr>')
+        $('#tabla1 tr:last').after('<tr><td><input onchange="proTotal1(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad'+contador+'" class="form-control" value="0"></td><td><div class="input-group"><input disabled style=" width: 350px;" id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" type="text" class="form-control" placeholder="Producto..."><span class="input-group-btn"><button class="btn btn-default" type="button" id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" onclick="verProductos1(this)">Buscar</button></span></div></td><td><input value="0" disabled type="text" name="txtPUni'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtPUni'+contador+'" class="form-control" onclick=""></td><td><input onchange="total()" value ="0" disabled type="text" name="txtPTot'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtPTot'+contador+'" class="form-control" onclick=""></td></tr>')
     }
 
     function quitar() {
@@ -282,7 +319,7 @@
             $('#tabla1 tr:last').remove()
 
             dir--;
-        }
+        }   
     }
 
     function verProductos(pro){
@@ -343,19 +380,19 @@
                         if (bandera == "si"){
                             document.getElementById("txtNomProducto").value = array[0]
                             document.getElementById("txtPUni").value = array[1]
-                            document.getElementById("txtCantidad").value = can
+                            document.getElementById("txtCantidad").value = can  
                             document.getElementById("txtPtot").value = tot
                             totales.push({'txtPTot':tot})
                             total()
                         }
-
+                        
                     }
                 }
             }
 
 
         });
-
+        
     }
 
     function verProductos1(pro){
@@ -418,7 +455,7 @@
                             if (bandera == "si"){
                                 document.getElementById("txtNomProducto"+num).value = array[0]
                                 document.getElementById("txtPUni"+num).value = array[1]
-                                document.getElementById("txtCantidad"+num).value = can
+                                document.getElementById("txtCantidad"+num).value = can  
                                 document.getElementById("txtPTot"+num).value = tot
                                 var txtPTot = "txtPTot"+num
                                 totales.push({'txtPTot':tot})
