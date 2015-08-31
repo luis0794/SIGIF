@@ -8,33 +8,23 @@
         <div class="panel-body">
             <form  method="post" id="formulario">{% csrf_token %}
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-5">
                         <label> <font color="black" face="Arial" size=3>Num. Pedido: </font></label>
+                        {{ ped.ped_num }}
                     </div>
-                    <div class="col-md-2">
-                        <input type="number" style="display: none" onchange="clave()"  id="txtClave" value="{{ id_ped }}">
-                        {{ form.ped_num }}
-                    </div>
-                    <div class="col-md-2">
+                    <div class="col-md-5">
                         <label> <font color="black" face="Arial" size=3>Fecha: </font></label>
-                    </div>
-                    <div class="col-md-2">
-                        {{ form.ped_fec }}
+                        {{ ped.ped_fec }}
                     </div>
                 </div>
-                <br>
                 <div class="row">
-                    <div class="col-md-2">
-                        <label> <font color="black" face="Arial" size=3>Nom. Usuario: </font></label>
+                    <div class="col-md-5">
+                        <label> <font color="black" face="Arial" size=3>Usuario: </font></label>
+                        {{ ped.usu_id }}
                     </div>
-                    <div class="col-md-2">
-                        {{ form.usu_id }}
-                    </div>
-                    <div class="col-md-2">
+                    <div class="col-md-5">
                         <label> <font color="black" face="Arial" size=3>Nom. Proveedor: </font></label>
-                    </div>
-                    <div class="col-md-2">
-                            {{ form.prov_id }}
+                        {{ ped.prov_id }}
                     </div>
                 </div>
                 <br>
@@ -48,20 +38,23 @@
                             </tr>
                         </thead>
                         <tbody>
+                        {% for det in detalle %}
                             <tr>
+
                                 <td>
-                                    <input type="number" name="txtCantidad" id="txtCantidad" class="form-control" onclick="">
+                                    {{ det.det_ped_can }}
                                 </td>
                                 <td>
                                     <div class="input-group">
-                                        <input disabled id="1" name="1" type="text" class="form-control" placeholder="Producto...">
+                                        {{ det.pro_id }}
                                     </span>
                                     </div>
                                 </td>
                                 <td>
-                                    <input type="text" name="txtNota" id="txtNota" class="form-control" onclick="">
+                                    {{ det.det_ped_des }}
                                 </td>
                             </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                     <br>

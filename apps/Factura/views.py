@@ -108,3 +108,12 @@ def newBill_view(request):
     cntx={'listaClientes': Cliente.objects.all(),'listaProductos':Producto.objects.all(),'id_fac':id_fac, 'form':form}
 
     return render(request,'addbill.html',cntx)
+
+def imprimirBill(request,id):
+    fac=Factura.objects.get(pk=id)
+    cli_id_=fac.cli_id_id
+    cliente=Cliente.objects.get(pk=cli_id_)
+    detalle=Detalle_Factura.objects.filter(fac_id=id)
+    produc=Producto.objects.all()
+
+    return render_to_response('imprimirBill.html',{'cliente':cliente,'fac':fac,'detalle':detalle},context_instance=RequestContext(request))

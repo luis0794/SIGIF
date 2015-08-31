@@ -26,7 +26,7 @@
             <th>Cliente</th>
             <th>Fecha</th>
             <th>Total</th>
-            <th>(Editar / Eliminar)</th>
+            <th>Imprimir</th>
           </tr>
         </thead>
         <tbody>
@@ -36,10 +36,10 @@
             <td>{{ factura.cli_id }}</td>
             <td>{{ factura.fac_fec }}</td>
             <td>{{ factura.fac_tot }}</td>
-            <td>
-              <button type="button" class="btn btn-default" onclick=" window.location.href='#'"><span class="glyphicon glyphicon-pencil"></span></button>
-              <button type="button" class="btn btn-default" onclick=" window.location.href='#'"><span class="glyphicon glyphicon-remove"></span></button>
-            </td>
+
+          <td>
+              <button type="button" class="btn btn-default" onclick="window.open('{% url 'print_factura' factura.id %}') "><span class="glyphicon glyphicon-print"></span></button>
+          </td>
           </tr>
           {% endfor %}
         </tbody>

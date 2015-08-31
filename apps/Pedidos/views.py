@@ -118,10 +118,9 @@ class listOrderProduct_view(TemplateView):
 def imprimirOrder(request,id):
     ped=Pedido.objects.get(pk=id)
     prov_id_=ped.id
-    print prov_id_
     prov=Proveedor.objects.get(pk=prov_id_)
     listaped = []
-    detalle=Detalle_Pedido.objects.filter(ped_id_id=id)
+    detalle=Detalle_Pedido.objects.filter(ped_id=id)
     produc=Producto.objects.all()
     cedula = ped.usu_id
     print cedula

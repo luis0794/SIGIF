@@ -1,0 +1,91 @@
+{% extends "navbar.html" %}
+{%load staticfiles%}
+{%block title%}Imprimir Factura{%endblock title%}
+{% block content%}
+    <body onload="window.print()">
+    <div class="panel panel-success">
+        <div class="panel-heading"><h4>Factura</h4></div>
+        <div class="panel-body">
+            <form method="POST" id="formulario">{% csrf_token %}
+                <div class="row">
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Factura Nº: </font></label>  {{ fac.fac_num }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Cliente:   </font></label>  {{ cliente.cli_nom }}
+                    </div>
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Cedula:   </font></label>  {{ cliente.cli_ced }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Direccion:   </font></label>  {{ cliente.cli_dir }}
+                    </div>
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Fecha:   </font></label>  {{ fac.fac_fec }}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <table id="tabla1" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th width="10%">Cantidad</th>
+                            <th width="40%">Nombre Producto</th>
+                            <th width="20%">Precio Unitario</th>
+                            <th width="20%">Precio Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for det in detalle %}
+                        <tr>
+                            <td>
+                                {{ det.can_det_fac }}
+                            </td>
+                            <td>
+                                {{ det.pro_id }}
+                            </td>
+                            <td>
+                                {{ det.pre_uni_det_fac }}
+                            </td>
+                            <td>
+                                {{ det.pre_tot_det_fac }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            <br>
+            <br>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Emitida por:     </font></label>  {{ fac.cli_id }}
+                    </div>
+                    <br>
+                    <br>
+                    <div class="col-md-3">
+                        <label> <font color="black" face="Arial" size=3 >SubTotal:      </font></label>{{ fac.fac_sub_tot }}
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <label> <font color="black" face="Arial" size=3>I.V.A.:     </font></label> {{ fac.fac_iva }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label> <font color="black" face="Arial" size=3>Total:     </font></label>  {{ fac.fac_tot }}
+                    </div>
+                </div>
+                <br>
+            </form>
+        </div>
+    </div>
+    </body>
+{% endblock content %}

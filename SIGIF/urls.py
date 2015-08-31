@@ -59,4 +59,5 @@ urlpatterns = [
     url(r'^factura/generar_pdf/$', generar_pdf_Factura, name='pdf_factura'),
     url(r'^factura/guardar/$', guardarFactura, name='save_factura'),
     url(r'^factura/guardar/Detalle/$', guardarFacturaDetalle, name='save_factura_detalle'),
+    url(r'^pedido/imprimirFactura/(?P<id>.*)/$',imprimirBill, name='print_factura'),
 ]
