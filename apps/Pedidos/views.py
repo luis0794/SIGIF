@@ -14,6 +14,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import Table
+from .forms import *
 
 def generar_pdf_Pedido(request):
     response = HttpResponse(content_type='application/pdf')
@@ -77,9 +78,16 @@ def listOrder_view(request):
 
 
 def newOrder_view(request):
+    form = PedidosForm(request.POST or None)
+    id=Pedido.objects.all().count()
+    id_ped=id+1
+    if form.is_valid():
+        form.save()
+        return redirect("list_pedido")
+
     cntx={'listaProveedores': Proveedor.objects.filter(est_proveedor=True),'listaPedidos': Pedido.objects.count(),
-          'listaProductos':Producto.objects.all().order_by('pro_nom'),}
-    return render_to_response('addorder.html',cntx,context_instance=RequestContext(request))
+          'listaProductos':Producto.objects.all().order_by('pro_nom'),'form':form, 'id_ped':id_ped}
+    return render(request,'addorder.html',cntx)
 
 class listOrderProduct_view(TemplateView):
     def get(self, request, *args, **kwargs):

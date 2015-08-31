@@ -137,7 +137,7 @@ class Detalle_Factura(models.Model):
 class Pedido(models.Model):
     ped_num = models.IntegerField()
     ped_fec = models.DateField(max_length=10)
-    prov_id = models.ForeignKey(Proveedor)
+    prov_id = models.ForeignKey(Proveedor, default=True)
     usu_id = models.ForeignKey(Usuario)
 
 

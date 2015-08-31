@@ -2,152 +2,111 @@
 {%load staticfiles%}
 {%block title%}Agregar Pedido{%endblock title%}
 {% block content%}
-    <div class="panel panel-default">
+<div class="panel panel-success">
         <div class="panel-heading"><h4>Agregar Pedido</h4></div>
         <div class="panel-body">
-            <form class="form-horizontal form-group " method="post" id="formulario">
+            <form  method="post" id="formulario">{% csrf_token %}
+                <div class="row">
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Num. Pedido: </font></label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" style="display: none" onchange="clave()"  id="txtClave" value="{{ id_ped }}">
+                        {{ form.ped_num }}
+                    </div>
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Fecha: </font></label>
+                    </div>
+                    <div class="col-md-2">
+                        {{ form.ped_fec }}
+                    </div>
+                </div>
                 <br>
-                {% csrf_token %}
-                <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center">
-                    <tr>
-                        <td width="100">&nbsp;</td>
-                        <td width="20">&nbsp;</td>
-                        <td width="80">&nbsp;</td>
-                        <td width="100">&nbsp;</td>
-                        <td width="50">&nbsp;</td>
-                        <td width="50">&nbsp;</td>
-                        <td width="100">&nbsp;</td>
-                        <td width="100">&nbsp;</td>
-                    </tr>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Nom. Usuario: </font></label>
+                    </div>
+                    <div class="col-md-2">
+                        {{ form.usu_id }}
+                    </div>
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Nom. Proveedor: </font></label>
+                    </div>
+                    <div class="col-md-2">
+                            {{ form.prov_id }}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <table id="tabla1" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th width="10%">Cantidad</th>
+                                <th width="40%">Nombre</th>
+                                <th width="50%">Nota</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="number" name="txtCantidad" id="txtCantidad" class="form-control" onclick="">
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <input disabled id="1" name="1" type="text" class="form-control" placeholder="Producto...">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" id="1" onclick="verProductos(this)">Buscar</button>
+                                    </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="txtNota" id="txtNota" class="form-control" onclick="">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <button class="btn btn-success" onclick="agregar()" name="btnadd" id="btnadd" type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true" > </span></button>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-danger" onclick="quitar()" name="btndel" id="btndel" type="button"><span class="glyphicon glyphicon-minus" aria-hidden="true" > </span></button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-1">
+                        <input class="btn btn-success" type="submit">
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary" >Imprimir</button>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-danger" >Cancelar</button>
+                    </div>
+                </div>
+            </form>
 
-                    <tr>
-                        <td colspan="1">
-                            <label> <font color="black" face="Arial" size=3>Num. Pedido: </font></label>
-                        </td>
-                        <td colspan="2">
-                            <input disabled style=" width: 150px;" type="text" class="form-control" id="numPed" value="Num" placeholder="Num...">
-                        </td>
-                    </tr>
-
-                    <tr><td><br></td></tr>
-
-                    <tr>
-                        <td colspan="1">
-                            <label> <font color="black" face="Arial" size=3>Nom. Usuario: </font></label>
-                        </td>
-                        <td colspan="2">
-                            <input disabled type="text" name="txtNomUsuario" style=" width: 150px ; height: 30px ;color: black" id="txtNomUsuario" class="form-control" onclick="" value={{user.usu_nom|capfirst}}>
-                        </td>
-                        <td colspan="1">
-                            <label> <font color="black" face="Arial" size=3 id="nomProv">Nom. Proveedor: </font></label>
-                        </td>
-                        <td colspan="2">
-                            <select  onchange="filtrarProductos()" class="form-control" style="width: 150px ; height: 30px; vertical-align: middle" name="cmbNomProveedor" id="cmbNomProveedor" SIZE=1>
-                                <option>-----</option>
-                                {%for proveedor in listaProveedores%}
-                                    <option value="{{ proveedor.id }}">{{proveedor.prov_nom}}</option>
-                                {%endfor%}
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="8">
-                            <hr>
-                        </td>
-
-                    <tr>
-                        <td colspan="1">
-                            <label> <font color="black" face="Arial" size=3>Productos </font></label>
-                        </td>
-                    </tr>
-
-                    <tr><td><br></td></tr>
-
-                    <tr>
-
-                        <td colspan="8">
-                            <table border="0" cellspacing="0" cellpadding="0" align="center" class="table table-striped" id="tabla1">
-                                <tr>
-                                    <th width="10%">Cantidad</th>
-                                    <th width="40%">Nombre</th>
-                                    <th width="50%">Nota</th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="text" name="txtCantidad" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad" class="form-control" onclick="">
-                                    </td>
-                                    <td>
-                                        <div class="input-group">
-                                            <input disabled style=" width: 290px;" id="1" name="1" type="text" class="form-control" placeholder="Producto...">
-                                          <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button" id="1" onclick="verProductos(this)">Buscar</button>
-                                        </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input type="text" name="txtNota" style=" width: 480px ; height: 34px ;color: black" id="txtNota" class="form-control" onclick="">
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <tr><td><br></td></tr>
-
-                    <tr>
-                        <td colspan="1">
-                            <button onclick="agregar()" name="btnuser" id="btnuser" type="button" style="font-size: 15px; width: 40px; height: 30px">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true" > </span>
-                                <button onclick="quitar()" name="btnuser" id="btnuser" type="button" style="font-size: 15px; width: 40px; height: 30px" onclick="">
-                                    <span class="glyphicon glyphicon-minus" aria-hidden="true" > </span>
-                        </td>
-                    </tr>
-
-                    <tr><td><br></td></tr>
-                </table>
-
-                <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center">
-                    <tr>
-                        <td width="100">&nbsp;</td>
-                        <td width="20">&nbsp;</td>
-                        <td width="80">&nbsp;</td>
-                        <td width="100">&nbsp;</td>
-                        <td width="50">&nbsp;</td>
-                        <td width="50">&nbsp;</td>
-                        <td width="100">&nbsp;</td>
-                        <td width="100">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td colspan="1">
-                            <input class="btn-danger btn"  onclick=" window.location.href='{%url 'index'%}'"value="Cancelar">
-                        </td>
-                        <td colspan="1">
-                            <input type="submit" class="btn-primary btn"  value="Guardar">
-                        </td>
-                        <td colspan="1">
-                            <input type="submit" class="btn-primary btn"  value="Imprimir">
-                        </td>
-                    </tr>
-                </table>
-            </form> 
         </div>
-    </div>
-    <div id="filaProducto"> </div>
+</div>
 
 {% endblock content %}
 {% block js_custom %}
 
     <script type="text/javascript">
+
         var dir=1;
         var vali =1;
         var contador=1;
         var bandera = "si"
+
         function agregar() {
             dir++;
             vali++;
             contador++;
-            $('#tabla1 tr:last').after('<tr><td><input type="text" name="txtCantidad'+contador+'" style=" width: 80px ; height: 34px ;color: black" id="txtCantidad'+contador+'" class="form-control" onclick="#"></td><td><div class="input-group"><input disabled style=" width: 290px;" id="'+contador+'" name="'+contador+'" type="text" class="form-control" placeholder="Producto..."><span class="input-group-btn"><button class="btn btn-default" type="button" id="'+contador+'" onclick="verProductos(this)">Buscar</button></span></div></td><td><input type="text" name="txtNota'+contador+'" style=" width: 480px ; height: 34px ;color: black" id="txtNota'+contador+'" class="form-control" onclick=""></td></tr>')
+            $('#tabla1 tr:last').after('<tr><td><input type="number" name="txtCantidad'+contador+'"id="txtCantidad'+contador+'" class="form-control" onclick="#"></td><td><div class="input-group"><input disabled id="'+contador+'" name="'+contador+'" type="text" class="form-control" placeholder="Producto..."><span class="input-group-btn"><button class="btn btn-default" type="button" id="'+contador+'" onclick="verProductos(this)">Buscar</button></span></div></td><td><input type="text" name="txtNota'+contador+'" id="txtNota'+contador+'" class="form-control" onclick=""></td></tr>')
         }
         function quitar() {
 
@@ -246,14 +205,16 @@
         }**/
 
     </script>
+    <script src="{% static 'js/jquery-1.11.3.js' %}"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            clave();
+        });
+        function clave(){
+            var clave = document.getElementById("txtClave");
+            document.getElementById("id_ped_num").value = clave.value;
+        }
+    </script>
 
 {% endblock js_custom %}
-
-
-
-
-
-
-
-
-

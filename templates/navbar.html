@@ -54,6 +54,10 @@
 {% block js_custom %}{% endblock js_custom %}
 
 {% block js %}
+    <script src="{% static 'js/jquery-1.11.3.js' %}"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
@@ -71,4 +75,4 @@
         <script src="{% static 'js/bootbox.min.js' %}"></script>
         {% endblock js %}
 
-        </html></>
+        </html>

@@ -99,4 +99,21 @@ def listBill_view(request):
 
 def newBill_view(request):
     cntx={'listaClientes': Cliente.objects.all(),'listaProductos':Producto.objects.all(),}
-    return render_to_response('addbill.html',cntx,context_instance=RequestContext(request)) 
+    cliente_id= ""
+    if(request.method=='POST'):
+
+        cliente= Cliente.objects.filter(cli_ced=request.POST.get("txtCedula"))
+        for i in cliente:
+            cliente_id=i.id
+
+        bill=Factura(fac_num="23",
+                     fac_fec=datetime.datetime.now(),
+                     fac_sub_tot=request.POST.get("txtSubTotal"),
+                     fac_iva=request.POST.get("txtIVA"),
+                     fac_des=request.POST.get("txtNomUsu"),
+                     fac_tot=request.POST.get("txtTotal"),
+                     cli_id_id=cliente_id,
+               )
+        bill.save()
+
+    return render_to_response('addbill.html',cntx,context_instance=RequestContext(request))

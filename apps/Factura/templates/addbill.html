@@ -24,7 +24,7 @@
                         <label> <font color="black" face="Arial" size=3>Factura Nº: </font></label>
                     </td>
                     <td colspan="2">
-                        <input disabled type="text" name="txtNumFactura" style=" width: 150px ; height: 30px ;color: black" id="txtNumFactura" class="form-control" value="1">
+                        <input type="text" name="txtNumFactura" style=" width: 150px ; height: 30px ;color: black" id="txtNumFactura" class="form-control" value="1">
                     </td>
                 </tr>
 
@@ -46,7 +46,7 @@
                         <label> <font color="black" face="Arial" size=3>Cedula: </font></label>
                     </td>
                     <td colspan="2">
-                        <input disabled type="text" name="txtCedula" style=" width: 140px ; height: 30px ;color: black" id="txtCedula" class="form-control" onclick="#">
+                        <input type="text" name="txtCedula" style=" width: 140px ; height: 30px ;color: black" id="txtCedula" class="form-control" >
                     </td>
                 </tr>
 
@@ -117,13 +117,13 @@
                                     <label> <font color="black" face="Arial" size=3>Emitida por: </font></label>
                                 </td>
                                 <td colspan="2">
-                                    <input disabled type="text" name="txtNomUsu" style=" width: 140px ; height: 30px ;color: black" id="txtNomUsu" class="form-control" onclick="" value="{{user.usu_nom|capfirst}}">
+                                    <input type="text" name="txtNomUsu" style=" width: 140px ; height: 30px ;color: black" id="txtNomUsu" class="form-control" onclick="" value="{{user.usu_nom|capfirst}}">
                                 </td>
                                 <td colspan="3">
                                     <label> <font color="black" face="Arial" size=3 >SubTotal </font></label>
                                 </td>
                                 <td colspan="2">
-                                    <input value="0" disabled type="text" name="txtSubTotal" style=" width: 80px ; height: 30px ;color: black" id="txtSubTotal" class="form-control" onclick="">
+                                    <input value="0" type="text" name="txtSubTotal" style=" width: 80px ; height: 30px ;color: black" id="txtSubTotal" class="form-control" onclick="">
                                 </td>
                             </tr>
                             <tr>
@@ -176,7 +176,7 @@
                         <input class="btn-danger btn"  onclick="location.href='{%url 'index'%}'" value="Cancelar">
                     </td>
                     <td colspan="1">
-                        <button class="btn-primary btn"  value="Guardar" onclick="guardar()">Guardar</button>
+                        <button class="btn-primary btn" type="submit" value="Guardar">Guardar</button>
                     </td>
                     <td colspan="1">
                         <input type="submit" class="btn-primary btn"  value="Imprimir">
@@ -232,36 +232,19 @@
             alert("no existen prductos");
             return false;
         }else{
-            alert(tabla.rows.length)
             if(tabla.rows.length >=2 ){
                 dic = [];
                 var va = 0;
                 for(var c=1 ; c < tabla.rows.length; c++){
-                    cantidad = document.getElementById("tabla1").rows[c].cells[0].innerHTML;
+                    cantidad = document.getElementById("tabla1").rows[c].cells[0].val();
                     PreUni = document.getElementById("tabla1").rows[c].cells[0].innerHTML;
                     PreTot = document.getElementById("tabla1").rows[c].cells[0].innerHTML;
                     dic.push({'cantidad': cantidad, 'PreUni': PreUni, 'PreTot': PreTot});
+                    alert(dic[c-1].cantidad)
+
                 }
 
-                $.ajax({
-                    url: '/factura/guardar/',
-                    dataType: 'json',
-                    data: {'numFac':numFac, 'subTot':subTot, 'iva':iva, 'txtTotal':total, 'cedCli':cedCli},
-                    type: 'GET',
-                    success: function(data){
-                        for (var x = 0; x < dic.length; x++) {
-                            $.ajax({
-                                url: '/factura/guardar/Detalle/',
-                                dateTime: 'json',
-                                data: {'cantidad': dic[x].cantidad, 'PreUni': dic[x].PreUni, 'PreTot': dic[x].PreTot, 'idFac':data, 'nomPro':nomPro},
-                                type: 'GET',
-                                success: function (data) {
 
-                                }
-                            });
-                        }
-                    }
-                });
             }
         }
     }
@@ -321,7 +304,7 @@
         
     }
 
-    
+
 
     function agregar() {
         dir++;
