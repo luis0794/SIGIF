@@ -49,6 +49,7 @@ urlpatterns = [
     url(r'^pedido/nuevoPedido/productos/$',listOrderProduct_view.as_view()),
     url(r'^pedido/generar_pdf/$', generar_pdf_Pedido, name='pdf_pedido'),
     url(r'^pedido/FiltrarProductos/$',obtenerProductos, name="filter_productos"),
+    url(r'^pedido/imprimirPedido/(?P<id>.*)/$',imprimirOrder, name='print_pedido'),
 
 
 

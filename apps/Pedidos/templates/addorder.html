@@ -81,7 +81,7 @@
                         <input class="btn btn-success" type="submit">
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-primary" >Imprimir</button>
+                        <button class="btn btn-primary" onclick=" window.open('{% url 'print_pedido' form.id %}','_blank')  ">Imprimir</button>
                     </div>
                     <div class="col-md-1">
                         <button class="btn btn-danger" >Cancelar</button>

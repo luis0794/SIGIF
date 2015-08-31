@@ -1,0 +1,74 @@
+{% extends "navbar.html" %}
+{%load staticfiles%}
+{%block title%}Imprimir Pedido{%endblock title%}
+{% block content%}
+<body onload="window.print()">
+<div class="panel panel-success">
+        <div class="panel-heading"><h4>Pedido</h4></div>
+        <div class="panel-body">
+            <form  method="post" id="formulario">{% csrf_token %}
+                <div class="row">
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Num. Pedido: </font></label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" style="display: none" onchange="clave()"  id="txtClave" value="{{ id_ped }}">
+                        {{ form.ped_num }}
+                    </div>
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Fecha: </font></label>
+                    </div>
+                    <div class="col-md-2">
+                        {{ form.ped_fec }}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Nom. Usuario: </font></label>
+                    </div>
+                    <div class="col-md-2">
+                        {{ form.usu_id }}
+                    </div>
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Nom. Proveedor: </font></label>
+                    </div>
+                    <div class="col-md-2">
+                            {{ form.prov_id }}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <table id="tabla1" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th width="10%">Cantidad</th>
+                                <th width="40%">Nombre</th>
+                                <th width="50%">Nota</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="number" name="txtCantidad" id="txtCantidad" class="form-control" onclick="">
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <input disabled id="1" name="1" type="text" class="form-control" placeholder="Producto...">
+                                    </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="txtNota" id="txtNota" class="form-control" onclick="">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                </div>
+            </form>
+
+        </div>
+</div>
+</body>
+{% endblock content %}

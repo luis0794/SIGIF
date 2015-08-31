@@ -6,6 +6,9 @@ class PedidosForm(forms.ModelForm):
     class Meta:
         model = Pedido
         widgets={
+            'id':forms.NumberInput(attrs={
+                'class':'form-control'
+            }),
             'ped_num':forms.NumberInput(attrs={
                 'class':'form-control'
             }),

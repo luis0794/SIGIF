@@ -114,3 +114,16 @@ class listOrderProduct_view(TemplateView):
             return HttpResponse(data, content_type='application/json')
         else:
             return Http404
+
+def imprimirOrder(request,id):
+    ped=Pedido.objects.get(pk=id)
+    prov_id_=ped.id
+    print prov_id_
+    prov=Proveedor.objects.get(pk=prov_id_)
+    listaped = []
+    detalle=Detalle_Pedido.objects.filter(ped_id_id=id)
+    produc=Producto.objects.all()
+    cedula = ped.usu_id
+    print cedula
+
+    return render_to_response('imprimirOrder.html',{'prov':prov,'ped':ped,'detalle':detalle,'listaped':listaped},context_instance=RequestContext(request))

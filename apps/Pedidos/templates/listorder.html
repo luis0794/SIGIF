@@ -1,49 +1,59 @@
 {% extends "navbar.html" %}
 {%block title%}Pedidos{%endblock%}
 {% block content%}
-<form class="form-horizontal form-group " method="post">{% csrf_token %}
-  <div class="btn-group" role="group" aria-label="...">
-      <button type="button" class="btn btn-default" onclick=" window.location.href='{% url 'new_pedido' %}' "><span class="glyphicon glyphicon-plus"></span> Agregar</button>
-      <button type="button" class="btn btn-default" onclick=" window.location.href='{% url 'pdf_pedido' %}' "><span class="glyphicon glyphicon-print"></span> Imprimir</button>
-      <div class="col-lg-3">
-        <div class="input-group">
+    <form class="form-horizontal form-group " method="post">{% csrf_token %}
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" onclick=" window.location.href='{% url 'new_pedido' %}' "><span class="glyphicon glyphicon-plus"></span> Agregar</button>
+            <button type="button" class="btn btn-default" onclick=" window.location.href='{% url 'pdf_pedido' %}' "><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+            <div class="col-lg-3">
+                <div class="input-group">
           <span class="input-group-btn ">
             <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
           </span>
-          <input id="buscar" name="buscar" type="text" class="form-control" placeholder="Numero del Pedido...">
+                    <input id="buscar" name="buscar" type="text" class="form-control" placeholder="Numero del Pedido...">
+                </div>
+            </div>
         </div>
-      </div>
-  </div>
-  <br>
-  <br>  
-  <div class="panel panel-default">
-    <div class="panel-heading"><h4>Listado de Pedidos</h4></div>
-    <div class="panel-body">
-              <table valign="middle" class="table">
-                <thead>
-                <tr>
-                    <th>Num. Pedido</th>
-                    <th>Nom.Proveedor</th>
-                    <th>Usuario</th>
-                    <th>(Editar / Eliminar)</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for pedido in results %}
-                    <tr>
-                        <td>{{ pedido.ped_num }}</td>
-                        <td>{{ pedido.prov_id }}</td>
-                        <td>{{ pedido.usu_id }}</td>
-                        <td>
-                            <button type="button" class="btn btn-default" onclick=" window.location.href='#'"><span class="glyphicon glyphicon-pencil"></span></button>
-                            <button type="button" class="btn btn-default" onclick=" window.location.href='#'"><span class="glyphicon glyphicon-remove"></span></button>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-              </table>
-    </div>
-  </div>
-</form>
+        <br>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4>Listado de Pedidos</h4></div>
+            <div class="panel-body">
+                <div class="row">
+                    <table valign="middle" class="table">
+                        <thead>
+                        <tr>
+                            <th>Num. Pedido</th>
+                            <th>Nom.Proveedor</th>
+                            <th>Usuario</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                            <th>Imprimir</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for pedido in results %}
+                            <tr>
+                                <td>{{ pedido.ped_num }}</td>
+                                <td>{{ pedido.prov_id }}</td>
+                                <td>{{ pedido.usu_id }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-default" onclick=" window.location.href='#'"><span class="glyphicon glyphicon-pencil"></span></button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-default" onclick=" window.location.href='#'"><span class="glyphicon glyphicon-remove"></span></button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-default" onclick=" window.open('{% url 'print_pedido' pedido.id %}','_blank')  "><span class="glyphicon glyphicon-print"></span></button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </form>
 
 {% endblock %}
