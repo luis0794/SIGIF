@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3fac1784-95fa-4e06-9127-10721a87ff03" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/security/templates/login.html" afterPath="$PROJECT_DIR$/apps/security/templates/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SIGIF/urls.py" afterPath="$PROJECT_DIR$/SIGIF/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/Clientes/views.py" afterPath="$PROJECT_DIR$/apps/Clientes/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/Factura/views.py" afterPath="$PROJECT_DIR$/apps/Factura/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/Pedidos/views.py" afterPath="$PROJECT_DIR$/apps/Pedidos/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/Productos/views.py" afterPath="$PROJECT_DIR$/apps/Productos/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/Proveedores/views.py" afterPath="$PROJECT_DIR$/apps/Proveedores/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/Usuarios/views.py" afterPath="$PROJECT_DIR$/apps/Usuarios/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/security/views.py" afterPath="$PROJECT_DIR$/apps/security/views.py" />
-    </list>
+    <list default="true" id="3fac1784-95fa-4e06-9127-10721a87ff03" name="Default" comment="" />
     <ignored path="SIGIF.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
