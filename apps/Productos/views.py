@@ -11,8 +11,10 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import Table
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='/')
 def listProduct_view(request):
     if request.method == 'POST':
         results=Producto.objects.filter(pro_nom__contains=request.POST["buscar"]).values()
@@ -20,10 +22,13 @@ def listProduct_view(request):
     results=Producto.objects.all().order_by('pro_nom')
     return render_to_response('listproduct.html',{'results':results},context_instance=RequestContext(request))
 
+@login_required(login_url='/')
 def listProductNew_view(request):
     pro=Producto.objects.all()
     return render_to_response('list_producto_new.html',{'pro':pro},context_instance=RequestContext(request))
 
+
+@login_required(login_url='/')
 def generar_pdf_Producto(request):
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "productos.pdf" 
@@ -57,12 +62,12 @@ def generar_pdf_Producto(request):
     buff.close()
     return response
 
-
 class newProduct_view(CreateView):
     model = Producto
     fields = ('prov_id','pro_nom','pro_pre','pro_mar','pro_des')
     template_name = 'addproduct.html'
     success_url = '/index/'
+
 
 class editProduct_view(UpdateView):
     model = Producto

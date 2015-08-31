@@ -13,7 +13,9 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import Table
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/')
 def listUser_view(request):
     if request.method == 'POST':
         results=Usuario.object.filter(usu_ced__contains=request.POST["buscar"]).values()
@@ -22,6 +24,7 @@ def listUser_view(request):
     return render_to_response('listuser.html',{'results':results},context_instance=RequestContext(request))
 
 
+@login_required(login_url='/')
 def delUser_view(request,pk):
     obj = get_object_or_404(Usuario, pk=pk)
     obj.usu_est=False
@@ -43,7 +46,7 @@ class editUser_view(UpdateView):
     template_name = 'edituser.html'
     success_url = '/usuario/Administrar/'
 
-
+@login_required(login_url='/')
 def generar_pdf_Usuario(request):
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "usuarios.pdf"

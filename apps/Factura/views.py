@@ -14,7 +14,9 @@ from reportlab.platypus import Table
 import datetime 
 import json
 from .forms import *
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/')
 def guardarFactura(request):
     nomProd= ""
     producto= Producto.objects.filter(pro_nom=request.GET["nomPro"])
@@ -33,6 +35,8 @@ def guardarFactura(request):
 
     return HttpResponse(data, content_type='application/json')
 
+
+@login_required(login_url='/')
 def guardarFacturaDetalle(request):
     print 'yes'
     cliente_id= ""
@@ -55,7 +59,7 @@ def guardarFacturaDetalle(request):
 
     return HttpResponse(data, content_type='application/json')
 
-
+@login_required(login_url='/')
 def generar_pdf_Factura(request):
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "facturas.pdf" 
@@ -89,6 +93,7 @@ def generar_pdf_Factura(request):
     buff.close()
     return response
 
+@login_required(login_url='/')
 def listBill_view(request):
     if request.method == 'POST':
         results=Factura.objects.filter(fac_num__contains=request.POST["buscar"]).values()
@@ -96,7 +101,7 @@ def listBill_view(request):
     results=Factura.objects.all().order_by('fac_num')
     return render_to_response('listbill.html',{'results':results},context_instance=RequestContext(request))
 
-
+@login_required(login_url='/')
 def newBill_view(request):
     form = FacturaForm(request.POST or None)
     id=Factura.objects.all().count()
@@ -109,6 +114,7 @@ def newBill_view(request):
 
     return render(request,'addbill.html',cntx)
 
+@login_required(login_url='/')
 def imprimirBill(request,id):
     fac=Factura.objects.get(pk=id)
     cli_id_=fac.cli_id_id

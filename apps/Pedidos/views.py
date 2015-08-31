@@ -15,7 +15,9 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import Table
 from .forms import *
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/')
 def generar_pdf_Pedido(request):
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "pedidos.pdf"
@@ -49,6 +51,7 @@ def generar_pdf_Pedido(request):
     buff.close()
     return response
 
+@login_required(login_url='/')
 def obtenerProductos(request):
     prov = request.GET['id_proveedor']
     productos=Producto.objects.filter(prov_id=prov)
@@ -68,7 +71,7 @@ def obtenerProductos(request):
 
 
 
-
+@login_required(login_url='/')
 def listOrder_view(request):
     if request.method == 'POST':
         results=Pedido.objects.filter(ped_num__contains=request.POST["buscar"]).values()
@@ -76,7 +79,7 @@ def listOrder_view(request):
     results=Pedido.objects.all().order_by('ped_num')
     return render_to_response('listorder.html',{'results':results},context_instance=RequestContext(request))
 
-
+@login_required(login_url='/')
 def newOrder_view(request):
     form = PedidosForm(request.POST or None)
     id=Pedido.objects.all().count()
@@ -115,6 +118,7 @@ class listOrderProduct_view(TemplateView):
         else:
             return Http404
 
+@login_required(login_url='/')
 def imprimirOrder(request,id):
     ped=Pedido.objects.get(pk=id)
     prov_id_=ped.id

@@ -11,7 +11,9 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import Table
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/')
 def listProvider_view(request):
     if request.method == 'POST':
         results=Proveedor.objects.filter(prov_nom__contains=request.POST["buscar"]).values()
@@ -19,12 +21,14 @@ def listProvider_view(request):
     results=Proveedor.objects.all().order_by('prov_nom')
     return render_to_response('listprovider.html',{'results':results},context_instance=RequestContext(request))
 
+@login_required(login_url='/')
 def delProvider_view(request,pk):
     obj = get_object_or_404(Proveedor, pk=pk)
     obj.cli_est=False
     obj.save()
     return redirect("/proveedor/Administrar/")
 
+@login_required(login_url='/')
 def generar_pdf_Proveedor(request):
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "proveedores.pdf" 

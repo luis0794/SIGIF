@@ -11,8 +11,9 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import Table
+from django.contrib.auth.decorators import login_required
 
-
+@login_required(login_url='/')
 def listClient_view(request):
     if request.method == 'POST':
         results=Cliente.objects.filter(cli_ced__contains=request.POST["buscar"]).values()
@@ -20,12 +21,14 @@ def listClient_view(request):
     results=Cliente.objects.all().order_by('cli_nom')
     return render_to_response('listclient.html',{'results':results},context_instance=RequestContext(request))
 
+@login_required(login_url='/')
 def delClient_view(request,pk):
     obj = get_object_or_404(Cliente, pk=pk)
     obj.cli_est=False
     obj.save()
     return redirect("/cliente/Administrar/")
 
+@login_required(login_url='/')
 def generar_pdf_Cliente(request):
     response = HttpResponse(content_type='application/pdf')
     pdf_name = "clientes.pdf" 
@@ -58,7 +61,6 @@ def generar_pdf_Cliente(request):
     response.write(buff.getvalue())
     buff.close()
     return response
-
 
 class newClient_view(CreateView):
     model = Cliente
