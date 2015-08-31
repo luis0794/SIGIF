@@ -49,11 +49,8 @@
                         <td>{{ usuario.usu_tel }}</td>
                         <td>{{ usuario.usu_ema }}</td>
 
-                        
-
                         <td>
                             <button type="button" class="btn btn-default" onclick=" window.location.href='{% url 'edit_usuario' usuario.id %}' "><span class="glyphicon glyphicon-pencil"></span></button>
-                            <button type="button" class="btn btn-default" onclick=" window.location.href='{% url 'delete_usuario' usuario.id %}' "><span class="glyphicon glyphicon-remove"></span></button>
                         </td>
                     </tr>
                 {% endfor %}

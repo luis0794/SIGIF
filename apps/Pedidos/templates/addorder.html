@@ -81,10 +81,7 @@
                         <input class="btn btn-success" type="submit">
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-primary" onclick=" window.open('{% url 'print_pedido' form.id %}','_blank')  ">Imprimir</button>
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-danger" >Cancelar</button>
+                        <input value="Cancelar" class="btn btn-danger" onclick="window.location.href='{% url 'list_pedido' %}'">
                     </div>
                 </div>
             </form>
@@ -155,17 +152,8 @@
                                 className: "btn-success",
                                 callback: function () {
                                     var name = $('input:radio[name=select]:checked').val()
+                                    document.getElementById(id.id).value = name
 
-
-                                    for(var i=1 ; i<=vali; i++){
-                                        if($("#"+i).val() == name){
-                                            alert("Producto ya seleccionado")
-                                            bandera = "no"
-                                        }
-                                    }
-                                    if (bandera == "si"){
-                                        document.getElementById(id.id).value = name
-                                    }
 
                                 }
                             }
@@ -173,36 +161,6 @@
                     }
             );
         }
-        /**
-         function filtrarProductos(){
-            var prove = document.getElementById('cmbNomProveedor');
-            var id_proveedor = prove.options[prove.selectedIndex].value;
-            $.ajax({
-                url: '/pedido/FiltrarProductos/',
-                dataType:'json',
-                data: {'id_proveedor':id_proveedor},
-                type: 'GET'
-
-            })
-                    .done(function(data){
-                        var fila = ''
-                        for (var i=0; i<data.length; i++){
-                            fila += '<table>'+
-                                    '<tr>'+
-                                    '<td>'+(data[i].nombre)+'</td>'+
-                                    '<td>'+(data[i].marca)+'</td>'+
-                                    '<td>'+(data[i].precio)+'</td>'+
-                                    '<td>'+(data[i].stock_actual)+'</td>'+
-                                    '<td><input type="radio" name="select" value="'+(data[i].nombre)+'"></td>'+
-                                    '</tr>'+
-                                    '</table>'
-                        }
-                        $('#filaProducto').html(fila);
-                    })
-                    .fail(function (jqXHR, textStatus, errorThrown) {
-                        alert(errorThrown)
-                    })
-        }**/
 
     </script>
     <script src="{% static 'js/jquery-1.11.3.js' %}"></script>

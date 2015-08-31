@@ -14,10 +14,9 @@ urlpatterns = [
     url(r'^index/$','apps.security.views.index_view',name='index'),
 
 #Usuarios
-    url(r'^usuario/nuevoUsuario/$',newUser_view.as_view,name='new_usuario'),
+    url(r'^usuario/nuevoUsuario/$',newUser_view.as_view(),name='new_usuario'),
     url(r'^usuario/Administrar/',listUser_view,name="list_usuario"),
     url(r'^usuario/editarUsuario/(?P<pk>\d+)/$',editUser_view.as_view(),name='edit_usuario'),
-    url(r'^usuario/borrar/(?P<pk>.*)/$', delUser_view, name='delete_usuario'),
     url(r'^usuario/generar_pdf/$', generar_pdf_Usuario, name='pdf_usuario'),
 
 

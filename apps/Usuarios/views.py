@@ -24,12 +24,6 @@ def listUser_view(request):
     return render_to_response('listuser.html',{'results':results},context_instance=RequestContext(request))
 
 
-@login_required(login_url='/')
-def delUser_view(request,pk):
-    obj = get_object_or_404(Usuario, pk=pk)
-    obj.usu_est=False
-    obj.save()
-    return redirect("/usuario/Administrar/")
 
 class newUser_view(FormView):
     form_class = UserForm
@@ -39,6 +33,9 @@ class newUser_view(FormView):
     def form_valid(self,form):
         form.save()
         return super(newUser_view,self).form_valid(form)
+
+
+
 
 class editUser_view(UpdateView):
     model = Usuario

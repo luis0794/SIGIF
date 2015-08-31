@@ -14,16 +14,19 @@ class FacturaForm(forms.ModelForm):
                 'type':'date'
             }),
             'fac_sub_tot':forms.NumberInput(attrs={
-                'class':'form-control'
+                'class':'form-control',
+                'step': '0.01'
             }),
             'fac_iva':forms.NumberInput(attrs={
-                'class':'form-control'
+                'class':'form-control',
+                'step': '0.01'
             }),
             'fac_des':forms.TextInput(attrs={
                 'class':'form-control'
             }),
             'fac_tot':forms.NumberInput(attrs={
-                'class':'form-control'
+                'class':'form-control',
+                'step': '0.01'
             }),
             'cli_id':forms.Select(attrs={
                 'class':'form-control'

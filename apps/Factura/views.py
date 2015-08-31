@@ -101,13 +101,28 @@ def listBill_view(request):
     results=Factura.objects.all().order_by('fac_num')
     return render_to_response('listbill.html',{'results':results},context_instance=RequestContext(request))
 
-@login_required(login_url='/')
 def newBill_view(request):
+    contador=0
     form = FacturaForm(request.POST or None)
     id=Factura.objects.all().count()
     id_fac=id+1
+    producto = Producto.objects.all()
     if form.is_valid():
         form.save()
+        id1=Factura.objects.all().count()
+        print id1
+        idF= get_object_or_404(Factura, id=id1)
+        print idF
+        contador = int(request.POST.get("contar"))
+        print contador
+        for i in range(contador):
+            print "1"
+            prd=get_object_or_404(Producto, id= request.POST.get("idpr1"))
+            cant=request.POST.get("TxtCantidad"+str(i+1))
+            det=request.POST.get("id_fac_des")
+            print cant,det
+            deta=Detalle_Factura(det_ped_can=cant,det_ped_des=det,ped_id=idF,pro_id=prd)
+            deta.save()
         return redirect("list_factura")
 
     cntx={'listaClientes': Cliente.objects.all(),'listaProductos':Producto.objects.all(),'id_fac':id_fac, 'form':form}

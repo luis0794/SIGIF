@@ -1,16 +1,17 @@
 {% extends "navbar.html" %}
+{% load staticfiles %}
 {%block title%}Agregar Factura{%endblock%}
 {% block content%}
     <div class="panel panel-success">
         <div class="panel-heading"><h4>Agregar Factura</h4></div>
         <div class="panel-body">
-            <form method="POST" id="formulario">{% csrf_token %}
+            <form method="POST" id="formulario" name="form1">{% csrf_token %}
                 <div class="row">
                     <div class="col-md-2">
                         <label> <font color="black" face="Arial" size=3>Factura Nº: </font></label>
                     </div>
                     <div class="col-md-2">
-                        <input style="display: none" type="text" name="txtNumFactura" id="txtNumFactura" class="form-control" value="1">
+                        <input style="display: none" type="text" name="txtClave" id="txtClave" class="form-control" value="{{ id_fac }}">
                         {{ form.fac_num }}
                     </div>
                 </div>
@@ -25,8 +26,11 @@
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="verClientes()">Buscar</button>
                             </span>
+                        </div>
+                        <div >
                             {{ form.cli_id }}
                         </div>
+
                     </div>
                     <div class="col-md-2">
                         <label> <font color="black" face="Arial" size=3>Cedula: </font></label>
@@ -54,33 +58,39 @@
                 <div class="row">
                     <table id="tabla1" class="table table-striped">
                         <thead>
-                            <tr>
-                                <th width="10%">Cantidad</th>
-                                <th width="40%">Nombre Producto</th>
-                                <th width="20%">Precio Unitario</th>
-                                <th width="20%">Precio Total</th>
-                            </tr>
+                        <tr>
+                            <th width="10%">ID</th>
+                            <th width="10%">Cantidad</th>
+                            <th width="40%">Nombre Producto</th>
+                            <th width="20%">Precio Unitario</th>
+                            <th width="20%">Precio Total</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                              <td>
-                                <input onchange="proTotal(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad"  id="txtCantidad" class="form-control" value="0">
-                                </td>
-                              <td>
-                                  <div class="input-group">
+                        <tr>
+
+                            <td>
+                                <input disabled type="number" name="idpr1"  id="idpr1" class="form-control" value="0">
+
+                            </td>
+                            <td>
+                                <input disabled onchange="proTotal(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad1"  id="txtCantidad1" class="form-control" value="0">
+                            </td>
+                            <td>
+                                <div class="input-group">
                                     <input disabled id="txtNomProducto" name="txtNomProducto" type="text" class="form-control" placeholder="Producto...">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default" type="button" id="txtNomProducto" name="txtNomProducto" onclick="verProductos(this)">Buscar</button>
                                     </span>
-                                  </div>
-                              </td>
-                              <td>
+                                </div>
+                            </td>
+                            <td>
                                 <input disabled value="0" type="text" name="txtPUni" id="txtPUni" class="form-control" onclick="">
-                              </td>
-                              <td>
+                            </td>
+                            <td>
                                 <input onchange="total()" value="0" disabled type="text" name="txtPTot" id="txtPtot" class="form-control">
-                              </td>
-                            </tr>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -153,218 +163,137 @@
                         <button class="btn btn-success" type="submit" >Guardar</button>
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-primary" >Imprimir</button>
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-danger" >Cancelar</button>
+                        <input class="btn btn-danger" value="Cancelar" onclick="window.location.href='{% url 'list_pedido' %}'">
                     </div>
                 </div>
+                <input  type="number" id="contar" name="contar">
             </form>
         </div>
+
     </div>
 {%endblock content%}
 {% block js_custom %}
-<script type="text/javascript">
-    var dir=1;
-    var vali =1;
-    var contador=1;
-    var contador1=10;
-    var bandera = "si"
-    var bander1 = "si"
-    var totales=[]
+    <script src="{% static 'js/jquery-1.11.3.js' %}"></script>
+    <script type="text/javascript">
+        var dir=1;
+        var vali =1;
+        var contador=1;
+        var contador1=10;
+        var bandera = "si"
+        var bander1 = "si"
+        var totales=[]
+        var c=  document.getElementById("contar");
+            c.value=contador;
+        function total(){
+            subtotal=0
 
-    function total(){
-        subtotal=0
-
-        for(var i=0;i<totales.length;i++){
-            subtotal+=totales[i].txtPTot
-
-        }
-        alert(totales[0].txtPTot)
-        var iva = subtotal*0.12
-        var total = subtotal+iva
-        document.getElementById("txtSubTotal").value =subtotal
-        document.getElementById("txtIVA").value = iva
-        document.getElementById("txtTotal").value = total
-    }
-
-    function guardar(){
-        var numFac = document.getElementById('txtNumFactura').value;
-        var nomCli = document.getElementById('txtNomCliente').value;
-        var dirCli = document.getElementById('txtDireccion').value;
-        var cedCli = document.getElementById('txtCedula').value;
-        var subTot = document.getElementById('txtSubTotal').value;
-        var iva = document.getElementById('txtIVA').value;
-        var total = document.getElementById('txtTotal').value;
-        var tabla = document.getElementById('tabla1');
-        var nomPro = document.getElementById('txtNomProducto').value;
-
-        if ((parseInt(total) == "0")) {
-            alert("no existen prductos");
-            return false;
-        }else{
-            if(tabla.rows.length >=2 ){
-                dic = [];
-                var va = 0;
-                for(var c=1 ; c < tabla.rows.length; c++){
-                    cantidad = document.getElementById("tabla1").rows[c].cells[0].val();
-                    PreUni = document.getElementById("tabla1").rows[c].cells[0].innerHTML;
-                    PreTot = document.getElementById("tabla1").rows[c].cells[0].innerHTML;
-                    dic.push({'cantidad': cantidad, 'PreUni': PreUni, 'PreTot': PreTot});
-                    alert(dic[c-1].cantidad)
-
-                }
-
+            for(var i=0;i<totales.length;i++){
+                subtotal+=totales[i].txtPTot
 
             }
-        }
-    }
-
-    function proTotal(can){
-        if($("#txtPUni").val() == "0"){
-            bootbox.dialog({
-                message: 'Primero elija un producto',
-                buttons: {
-                    success: {
-                        label: "Aceptar",
-                        className: "btn-success",
-                        callback: function () {
-                            document.getElementById("txtCantidad").value = 0
-                        }
-                    }
-                }
-            }
-            );
-        }else{
-            var cant = parseInt(can.value)
-            var uniS = $("#txtPUni").val()
-            var uniF = parseFloat(uniS.replace(",","."))
-            var tot = cant*uniF
-            document.getElementById("txtPtot").value=tot
-            total()
+            var iva = subtotal*0.12
+            var total = subtotal+iva
+            document.getElementById("id_fac_sub_tot").value =subtotal
+            document.getElementById("id_fac_iva").value = iva
+            document.getElementById("id_fac_tot").value = total
         }
 
-    }
 
-    function proTotal1(pro){
-        var numid = ""+pro.id
-        var num =  numid.replace(/[^.0-9]/g,'');
-        if($("#txtPUni"+num).val() == "0"){
-            bootbox.dialog({
-                message: 'Primero elija un producto',
-                buttons: {
-                    success: {
-                        label: "Aceptar",
-                        className: "btn-success",
-                        callback: function () {
-                            document.getElementById("txtCantidad"+num).value = 0
-                        }
-                    }
-                }
-            }
-            );
-        }else{
-            var cant = $("#txtCantidad"+num).val()
-            var cantI = parseInt(cant)
-            var uniS = $("#txtPUni"+num).val()
-            var uniF = parseFloat(uniS.replace(",","."))
-            var tot = cantI*uniF
-            alert(tot)
-            document.getElementById("txtPTot"+num).value=tot
-        }
-
-    }
-
-    function agregar() {
-        dir++;
-        vali++;
-        contador++;
-        $('#tabla1 tr:last').after('<tr><td><input onchange="proTotal1(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad'+contador+'" id="txtCantidad'+contador+'" class="form-control" value="0"></td><td><div class="input-group"><input disabled id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" type="text" class="form-control" placeholder="Producto..."><span class="input-group-btn"><button class="btn btn-default" type="button" id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" onclick="verProductos1(this)">Buscar</button></span></div></td><td><input value="0" disabled type="text" name="txtPUni'+contador+'" id="txtPUni'+contador+'" class="form-control" onclick=""></td><td><input onchange="total()" value ="0" disabled type="text" name="txtPTot'+contador+'" id="txtPTot'+contador+'" class="form-control" onclick=""></td></tr>')
-    }
-
-    function quitar() {
-
-        if (dir > 1) {
-            $('#tabla1 tr:last').remove()
-
-            dir--;
-        }
-    }
-
-    function verProductos(pro){
-        bootbox.dialog({
-            message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
-            '<br>'+
-            '<br>'+
-            '<div class="panel panel-primary">'+
-            '<div class="panel-heading"><h4>Listado de Productos</h4></div>'+
-            '<div class="panel-body">'+
-            '<div class="input-group">'+
-            '<span class="input-group-addon" id="basic-addon1">Cantidad</span>'+
-            '<input id="txtCantidadD" type="number" class="form-control" value="0" aria-describedby="basic-addon1">'+
-            '</div>'+
-            '<table valign="middle" class="table">'+
-            '<thead>'+
-            '<tr>'+
-            '<th>Nombre</th>'+
-            '<th>Marca</th>'+
-            '<th>Stock Actual</th>'+
-            '<th>Precio</th>'+
-            '<th></th>'+
-            '</tr>'+
-            '</thead>'+
-            '<tbody>'+
-            '{% for producto in listaProductos %}'+
-            '<tr>'+
-            '<td>{{ producto.pro_nom }}</td>'+
-            '<td>{{ producto.pro_mar }}</td>'+
-            '<td>{{ producto.pro_sto_act }}</td>'+
-            '<td>{{ producto.pro_pre }}</td>'+
-            '<td><input type="radio" name="select" value="{{producto.pro_nom}}-{{ producto.pro_pre }}"></td>'+
-            '</tr>'+
-            '{% endfor %}'+
-            '</tbody>'+
-            '</table>'+
-            '</div>'+
-            '</div>'+
-            '</form>',
-            buttons: {
-                success: {
-                    label: "Aceptar",
-                    className: "btn-success",
-                    callback: function () {
-                        var name = $('input:radio[name=select]:checked').val()
-                        var array = name.split("-")
-                        var can = document.getElementById("txtCantidadD").value
-                        var puni = parseFloat(array[1].replace(",","."));
-                        var tot = parseInt(can) * puni
-
-                        for(var i=1 ; i<=vali; i++){
-                            if($("#txtNomProducto"+i).val() == array[0]){
-                                alert("Producto ya seleccionado")
-                                bandera = "no"
-
+        function proTotal(can){
+            if($("#txtPUni").val() == "0"){
+                bootbox.dialog({
+                            message: 'Primero eliga un producto',
+                            buttons: {
+                                success: {
+                                    label: "Aceptar",
+                                    className: "btn-success",
+                                    callback: function () {
+                                        document.getElementById("txtCantidad").value = 0
+                                    }
+                                }
                             }
                         }
-                        if (bandera == "si"){
-                            document.getElementById("txtNomProducto").value = array[0]
-                            document.getElementById("txtPUni").value = array[1]
-                            document.getElementById("txtCantidad").value = can
-                            document.getElementById("txtPtot").value = tot
-                            totales.push({'txtPTot':tot})
-                            total()
-                        }
-
-                    }
-                }
+                );
+            }else{
+                var cant = parseInt(can.value)
+                var uniS = $("#txtPUni").val()
+                var uniF = parseFloat(uniS.replace(",","."))
+                var tot = cant*uniF
+                document.getElementById("txtPtot").value=tot
+                total()
             }
 
+        }
 
-        });
+        function proTotal1(pro){
+            var numid = ""+pro.id
+            var num =  numid.replace(/[^.0-9]/g,'');
+            if($("#txtPUni"+num).val() == "0"){
+                bootbox.dialog({
+                            message: 'Primero eliga un producto',
+                            buttons: {
+                                success: {
+                                    label: "Aceptar",
+                                    className: "btn-success",
+                                    callback: function () {
+                                        document.getElementById("txtCantidad"+num).value = 0
+                                    }
 
-    }
+                                }
+                            }
+                        }
+                );
+            }else{
+                var cant = $("#txtCantidad"+num).val()
+                var cantI = parseInt(cant)
+                var uniS = $("#txtPUni"+num).val()
+                var uniF = parseFloat(uniS.replace(",","."))
+                var tot = cantI*uniF
+                alert(tot)
+                document.getElementById("txtPTot"+num).value=tot
+                total()
+            }
 
-    function verProductos1(pro){
+        }
+
+        function agregar() {
+            dir++;
+            vali++;
+            contador++;
+            c++;
+            $('#tabla1 tr:last').after('<tr>'+
+                    '<td>'+
+                    '<input disabled type="number" name="idpr'+contador+'"  id="idpr'+contador+'" class="form-control" value="0">'+
+
+                    '</td>'+
+                    '<td>'+
+                    '<input disabled onchange="proTotal(this)" onkeyup="proTotal(this)" type="number" name="txtCantidad'+contador+'"  id="txtCantidad'+contador+'" class="form-control" value="0">'+
+                    '</td>'+
+                    '<td>'+
+                    '<div class="input-group">'+
+                    '<input disabled id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" type="text" class="form-control" placeholder="Producto..."><span class="input-group-btn">'+
+                    '<button class="btn btn-default" type="button" id="txtNomProducto'+contador+'" name="txtNomProducto'+contador+'" onclick="verProductos1(this)">Buscar</button></span>'+
+                    '</div>'+
+                    '</td>'+
+                    '<td>'+
+                    '<input disabled value="0" type="text" name="txtPUni'+contador+'" id="txtPUni'+contador+'" class="form-control" onclick="">'+
+                    '</td>'+
+                    '<td>'+
+                    '<input onchange="total()" value="0" disabled type="text" name="txtPTot'+contador+'" id="txtPtot'+contador+'" class="form-control">'+
+                    '</td>'+
+                    '</tr>')
+        }
+
+        function quitar() {
+            c--;
+            if (dir > 1) {
+                $('#tabla1 tr:last').remove()
+
+                dir--;
+            }
+        }
+
+        function verProductos(pro){
             bootbox.dialog({
                 message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
                 '<br>'+
@@ -388,14 +317,14 @@
                 '</thead>'+
                 '<tbody>'+
                 '{% for producto in listaProductos %}'+
-                '<tr>'+
-                '<td>{{ producto.pro_nom }}</td>'+
-                '<td>{{ producto.pro_mar }}</td>'+
-                '<td>{{ producto.pro_sto_act }}</td>'+
-                '<td>{{ producto.pro_pre }}</td>'+
-                '<td><input type="radio" name="select" value="{{producto.pro_nom}}-{{ producto.pro_pre }}"></td>'+
-                '</tr>'+
-                '{% endfor %}'+
+                    '<tr>'+
+                    '<td>{{ producto.pro_nom }}</td>'+
+                    '<td>{{ producto.pro_mar }}</td>'+
+                    '<td>{{ producto.pro_sto_act }}</td>'+
+                    '<td>{{ producto.pro_pre }}</td>'+
+                    '<td><input type="radio" name="select" value="{{producto.pro_nom}}-{{ producto.pro_pre }}-{{ producto.pro_sto_act }}-{{ producto.id }}"></td>'+
+                    '</tr>'+
+                    '{% endfor %}'+
                 '</tbody>'+
                 '</table>'+
                 '</div>'+
@@ -411,83 +340,166 @@
                             var can = document.getElementById("txtCantidadD").value
                             var puni = parseFloat(array[1].replace(",","."));
                             var tot = parseInt(can) * puni
-                            var numid = ""+pro.id
-                            var num =  numid.replace(/[^.0-9]/g,'');
-
-                            for(var i=1 ; i<=vali; i++){
-                                if($("#txtNomProducto"+i).val() == array[0]){
-                                    alert("Producto ya seleccionado")
-                                    bandera = "no"
-
-                                }
-                            }
-                            if (bandera == "si"){
-                                document.getElementById("txtNomProducto"+num).value = array[0]
-                                document.getElementById("txtPUni"+num).value = array[1]
-                                document.getElementById("txtCantidad"+num).value = can
-                                document.getElementById("txtPTot"+num).value = tot
-                                var txtPTot = "txtPTot"+num
+                            var stock= array[2]
+                            if(can>stock){
+                                alert("No hay stock suficiente")
+                            }else{
+                                document.getElementById("txtNomProducto").value = array[0]
+                                document.getElementById("txtPUni").value = array[1]
+                                document.getElementById("txtCantidad1").value = can
+                                document.getElementById("txtPtot").value = tot
+                                document.getElementById("idpr1").value = array[3]
                                 totales.push({'txtPTot':tot})
-                                total()
+
+                            }
+                            total()
+                        }
+
+
+                    }
+
+                }
+
+
+            });
+
+        }
+
+        function verProductos1(pro){
+            bootbox.dialog({
+                        message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
+                        '<br>'+
+                        '<br>'+
+                        '<div class="panel panel-primary">'+
+                        '<div class="panel-heading"><h4>Listado de Productos</h4></div>'+
+                        '<div class="panel-body">'+
+                        '<div class="input-group">'+
+                        '<span class="input-group-addon" id="basic-addon1">Cantidad</span>'+
+                        '<input id="txtCantidadD" type="number" class="form-control" value="0" aria-describedby="basic-addon1">'+
+                        '</div>'+
+                        '<table valign="middle" class="table">'+
+                        '<thead>'+
+                        '<tr>'+
+                        '<th>Nombre</th>'+
+                        '<th>Marca</th>'+
+                        '<th>Stock Actual</th>'+
+                        '<th>Precio</th>'+
+                        '<th></th>'+
+                        '</tr>'+
+                        '</thead>'+
+                        '<tbody>'+
+                        '{% for producto in listaProductos %}'+
+                            '<tr>'+
+                            '<td>{{ producto.pro_nom }}</td>'+
+                            '<td>{{ producto.pro_mar }}</td>'+
+                            '<td>{{ producto.pro_sto_act }}</td>'+
+                            '<td>{{ producto.pro_pre }}</td>'+
+                            '<td><input type="radio" name="select" value="{{producto.pro_nom}}-{{ producto.pro_pre }}-{{ producto.pro_sto_act }}-{{ producto.id }}"></td>'+
+                            '</tr>'+
+                            '{% endfor %}'+
+                        '</tbody>'+
+                        '</table>'+
+                        '</div>'+
+                        '</div>'+
+                        '</form>',
+                        buttons: {
+                            success: {
+                                label: "Aceptar",
+                                className: "btn-success",
+                                callback: function () {
+                                    var name = $('input:radio[name=select]:checked').val()
+                                    var array = name.split("-")
+                                    var can = document.getElementById("txtCantidadD").value
+                                    var puni = parseFloat(array[1].replace(",","."));
+                                    var tot = parseInt(can) * puni
+                                    var numid = ""+pro.id
+                                    var num =  numid.replace(/[^.0-9]/g,'');
+                                    var stock = array[2]
+                                    if(can>stock){
+                                        alert("No hay stock suficiente")
+                                    }else{
+                                        document.getElementById("txtNomProducto"+num).value = array[0]
+                                        document.getElementById("txtPUni"+num).value = array[1]
+                                        document.getElementById("txtCantidad"+num).value = can
+                                        document.getElementById("txtPtot"+num).value = tot
+                                        document.getElementById("idpr"+num).value = array[3]
+                                        var txtPTot = "txtPTot"+num
+                                        totales.push({'txtPTot':tot})
+                                    }
+                                    total()
+                                }
                             }
                         }
                     }
-                }
-            }
             );
 
-    }
-
-    function verClientes(){
-        bootbox.dialog({
-            message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
-            '<br>'+
-            '<br>'+
-            '<div class="panel panel-primary">'+
-            '<div class="panel-heading"><h4>Listado de Clientes</h4></div>'+
-            '<div class="panel-body">'+
-            '<table valign="middle" class="table">'+
-            '<thead>'+
-            '<tr>'+
-            '<th>Cedula</th>'+
-            '<th>Nombres</th>'+
-            '<th>Apellidos</th>'+
-            '<th>Direccion</th>'+
-            '<th>Telefono</th>'+
-            '<th></th>'+
-            '</tr>'+
-            '</thead>'+
-            '<tbody>'+
-            '{% for cliente in listaClientes %}'+
-            '<tr>'+
-            '<td>{{ cliente.cli_ced }}</td>'+
-            '<td>{{ cliente.cli_nom }}</td>'+
-            '<td>{{ cliente.cli_ape }}</td>'+
-            '<td>{{ cliente.cli_dir }}</td>'+
-            '<td>{{ cliente.cli_tel }}</td>'+
-            '<td><input type="radio" name="select" value="{{ cliente.cli_ced }}-{{cliente.cli_nom}} {{ cliente.cli_ape }}-{{ cliente.cli_dir }}"></td>'+
-            '</tr>'+
-            '{% endfor %}'+
-            '</tbody>'+
-            '</table>'+
-            '</div>'+
-            '</div>'+
-            '</form>',
-            buttons: {
-                success: {
-                    label: "Aceptar",
-                    className: "btn-success",
-                    callback: function () {
-                        var name = $('input:radio[name=select]:checked').val()
-                        var array = name.split("-")
-                        document.getElementById("txtCedula").value = array[0]
-                        document.getElementById("txtNomCliente").value = array[1]
-                        document.getElementById("txtDireccion").value = array[2]
-                    }
-                }
-            }
         }
-        );
-    }
-</script>
+
+        function verClientes(){
+            bootbox.dialog({
+                        message: '<form class="form-horizontal form-group " method="post" id="formulario">'+
+                        '<br>'+
+                        '<br>'+
+                        '<div class="panel panel-primary">'+
+                        '<div class="panel-heading"><h4>Listado de Clientes</h4></div>'+
+                        '<div class="panel-body">'+
+                        '<table valign="middle" class="table">'+
+                        '<thead>'+
+                        '<tr>'+
+                        '<th>Cedula</th>'+
+                        '<th>Nombres</th>'+
+                        '<th>Apellidos</th>'+
+                        '<th>Direccion</th>'+
+                        '<th>Telefono</th>'+
+                        '<th></th>'+
+                        '</tr>'+
+                        '</thead>'+
+                        '<tbody>'+
+                        '{% for cliente in listaClientes %}'+
+                            '<tr>'+
+                            '<td>{{ cliente.cli_ced }}</td>'+
+                            '<td>{{ cliente.cli_nom }}</td>'+
+                            '<td>{{ cliente.cli_ape }}</td>'+
+                            '<td>{{ cliente.cli_dir }}</td>'+
+                            '<td>{{ cliente.cli_tel }}</td>'+
+                            '<td><input type="radio" name="select" value="{{ cliente.cli_ced }}-{{cliente.cli_nom}} {{ cliente.cli_ape }}-{{ cliente.cli_dir }}-{{ cliente.id }}"></td>'+
+                            '</tr>'+
+                            '{% endfor %}'+
+                        '</tbody>'+
+                        '</table>'+
+                        '</div>'+
+                        '</div>'+
+                        '</form>',
+                        buttons: {
+                            success: {
+                                label: "Aceptar",
+                                className: "btn-success",
+                                callback: function () {
+                                    var name = $('input:radio[name=select]:checked').val()
+                                    var array = name.split("-")
+                                    document.getElementById("txtCedula").value = array[0]
+                                    document.getElementById("txtNomCliente").value = array[1]
+                                    document.getElementById("txtDireccion").value = array[2]
+                                    document.getElementById("id_cli_id").value=array[3]
+                                }
+                            }
+                        }
+                    }
+            );
+        }
+    </script>
+    <script src="{% static 'js/jquery-1.11.3.js' %}"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            clave();
+        });
+        function clave(){
+            var clave = document.getElementById("txtClave");
+            document.getElementById("id_fac_num").value = clave.value;
+            document.getElementById("id_fac_des").value = "0"+{{user.usu_ced}}
+        }
+    </script>
+
 {% endblock js_custom %}
+

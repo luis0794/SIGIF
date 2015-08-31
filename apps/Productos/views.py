@@ -64,7 +64,7 @@ def generar_pdf_Producto(request):
 
 class newProduct_view(CreateView):
     model = Producto
-    fields = ('prov_id','pro_nom','pro_pre','pro_mar','pro_des')
+    fields = ('prov_id','pro_nom','pro_pre','pro_sto_act','pro_mar','pro_des')
     template_name = 'addproduct.html'
     success_url = '/index/'
 
