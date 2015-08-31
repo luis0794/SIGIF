@@ -10,7 +10,8 @@
                         <label> <font color="black" face="Arial" size=3>Factura Nº: </font></label>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" name="txtNumFactura" id="txtNumFactura" class="form-control" value="1">
+                        <input style="display: none" type="text" name="txtNumFactura" id="txtNumFactura" class="form-control" value="1">
+                        {{ form.fac_num }}
                     </div>
                 </div>
                 <br>
@@ -18,18 +19,19 @@
                     <div class="col-md-2">
                         <label> <font color="black" face="Arial" size=3>Cliente: </font></label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="input-group">
                             <input disabled  id="txtNomCliente" name="txtNomCliente" type="text" class="form-control" placeholder="Cliente...">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="verClientes()">Buscar</button>
                             </span>
+                            {{ form.cli_id }}
                         </div>
                     </div>
                     <div class="col-md-2">
                         <label> <font color="black" face="Arial" size=3>Cedula: </font></label>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <input type="text" name="txtCedula" id="txtCedula" class="form-control" >
                     </div>
                 </div>
@@ -38,8 +40,14 @@
                     <div class="col-md-2">
                         <label> <font color="black" face="Arial" size=3>Direccion: </font></label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-5">
                         <input disabled type="text" name="txtDireccion" id="txtDireccion" class="form-control" >
+                    </div>
+                    <div class="col-md-2">
+                        <label> <font color="black" face="Arial" size=3>Fecha: </font></label>
+                    </div>
+                    <div class="col-md-2">
+                        {{ form.fac_fec }}
                     </div>
                 </div>
                 <br>
@@ -91,7 +99,7 @@
                         <label> <font color="black" face="Arial" size=3>Emitida por: </font></label>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" name="txtNomUsu"  id="txtNomUsu" class="form-control" value="{{user.usu_nom|capfirst}}">
+                        {{ form.fac_des }}
                     </div>
                     <div class="col-md-3">
 
@@ -100,7 +108,7 @@
                         <label> <font color="black" face="Arial" size=3 >SubTotal </font></label>
                     </div>
                     <div class="col-md-2">
-                        <input value="0" type="text" name="txtSubTotal" id="txtSubTotal" class="form-control" >
+                        {{ form.fac_sub_tot }}
                     </div>
                 </div>
                 <br>
@@ -118,7 +126,7 @@
                         <label> <font color="black" face="Arial" size=3>I.V.A. </font></label>
                     </div>
                     <div class="col-md-2">
-                        <input value="0" disabled type="text" name="txtIVA"  id="txtIVA" class="form-control">
+                        {{ form.fac_iva }}
                     </div>
                 </div>
                 <br>
@@ -136,13 +144,13 @@
                         <label> <font color="black" face="Arial" size=3>Total </font></label>
                     </div>
                     <div class="col-md-2">
-                        <input value="0" disabled type="text" name="txtTotal" id="txtTotal" class="form-control">
+                        {{ form.fac_tot }}
                     </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="col-md-1">
-                        <button class="btn btn-success" type="submit" >Guargdar</button>
+                        <button class="btn btn-success" type="submit" >Guardar</button>
                     </div>
                     <div class="col-md-1">
                         <button class="btn btn-primary" >Imprimir</button>
@@ -266,8 +274,6 @@
         }
 
     }
-
-
 
     function agregar() {
         dir++;

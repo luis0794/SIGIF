@@ -13,6 +13,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.platypus import Table
 import datetime 
 import json
+from .forms import *
 
 def guardarFactura(request):
     nomProd= ""
@@ -96,24 +97,14 @@ def listBill_view(request):
     return render_to_response('listbill.html',{'results':results},context_instance=RequestContext(request))
 
 
-
 def newBill_view(request):
-    cntx={'listaClientes': Cliente.objects.all(),'listaProductos':Producto.objects.all(),}
-    cliente_id= ""
-    if(request.method=='POST'):
+    form = FacturaForm(request.POST or None)
+    id=Factura.objects.all().count()
+    id_fac=id+1
+    if form.is_valid():
+        form.save()
+        return redirect("list_factura")
 
-        cliente= Cliente.objects.filter(cli_ced=request.POST.get("txtCedula"))
-        for i in cliente:
-            cliente_id=i.id
+    cntx={'listaClientes': Cliente.objects.all(),'listaProductos':Producto.objects.all(),'id_fac':id_fac, 'form':form}
 
-        bill=Factura(fac_num="23",
-                     fac_fec=datetime.datetime.now(),
-                     fac_sub_tot=request.POST.get("txtSubTotal"),
-                     fac_iva=request.POST.get("txtIVA"),
-                     fac_des=request.POST.get("txtNomUsu"),
-                     fac_tot=request.POST.get("txtTotal"),
-                     cli_id_id=cliente_id,
-               )
-        bill.save()
-
-    return render_to_response('addbill.html',cntx,context_instance=RequestContext(request))
+    return render(request,'addbill.html',cntx)
